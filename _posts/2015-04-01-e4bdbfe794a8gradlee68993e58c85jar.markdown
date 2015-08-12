@@ -9,36 +9,35 @@ wordpress_id: 192
 categories:
 - Gradle
 ---
+```groovy
+task releaseJar(type: Jar) {
+  //设置manifest.mf的属性
+  manifest {
+      attributes 'Implementation-Title': 'Gradle Jar File Example',
+              'Implementation-Version': version,
+              'Main-Class': 'runqq'
+  }
+  //jar包包名
+  baseName = project.name
+  //jar包版本
+  version=this.version
+  //定义Classifier
+  classifier="JDK17"
+  //jar文件的输出路径，相对位置
+  destinationDir=new File("artifacts/")
+  //自定义jar包名称，如不自定义会为baseName+version+classifier.jar
+  //archiveName="demo.jar"
 
-
-    task releaseJar(type: Jar) {
-        //设置manifest.mf的属性
-        manifest {
-            attributes 'Implementation-Title': 'Gradle Jar File Example',
-                    'Implementation-Version': version,
-                    'Main-Class': 'runqq'
-        }
-        //jar包包名
-        baseName = project.name
-        //jar包版本
-        version=this.version
-        //定义Classifier
-        classifier="JDK17"
-        //jar文件的输出路径，相对位置
-        destinationDir=new File("artifacts/")
-        //自定义jar包名称，如不自定义会为baseName+version+classifier.jar
-        //archiveName="demo.jar"
-
-        //from对象接受一个文件路径集合，包含要打包到jar中的文件
-        from {
-            //从工程编译输出的目录中递归包含所有文件及其路径结构
-            configurations.compile.collect {
-                it.isDirectory() ? it : zipTree(it)
-            }
-        }
-        with jar
-    }
-
+  //from对象接受一个文件路径集合，包含要打包到jar中的文件
+  from {
+      //从工程编译输出的目录中递归包含所有文件及其路径结构
+      configurations.compile.collect {
+          it.isDirectory() ? it : zipTree(it)
+      }
+  }
+  with jar
+}
+```groovy
 
 
 

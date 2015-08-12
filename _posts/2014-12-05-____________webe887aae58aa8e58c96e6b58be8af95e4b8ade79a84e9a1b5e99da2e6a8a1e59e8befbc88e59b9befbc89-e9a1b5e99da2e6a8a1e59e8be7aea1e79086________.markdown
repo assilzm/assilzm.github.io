@@ -45,13 +45,13 @@ categories:
 
 
 
-        static Map<String, Class> BUILTIN_PAGES = new HashMap<String, Class>(){
-            {
-                put("Login Page", LoginPage.class)
-                put("Home Page", MainPage.class)
-                put("System Page", SystemSetting.class)
-            }
-        }
+static Map<String, Class> BUILTIN_PAGES = new HashMap<String, Class>(){
+    {
+        put("Login Page", LoginPage.class)
+        put("Home Page", MainPage.class)
+        put("System Page", SystemSetting.class)
+    }
+}
 
 
 
@@ -69,9 +69,9 @@ categories:
 
 
 
-        static Object createPage(pageName){
-            return BUILTIN_PAGES.get(pageName).newInstance()
-        }
+static Object createPage(pageName){
+    return BUILTIN_PAGES.get(pageName).newInstance()
+}
 
 
 
@@ -134,13 +134,13 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
     <font color="#bbb529">@Inherited
     </font><font color="#cc7832">public </font>@<font color="#cc7832">interface </font><font color="#bbb529">Page </font>{
 
-        <font color="#629755" style=" font-style:italic">/**
+<font color="#629755" style=" font-style:italic">/**
     </font><font color="#629755" style=" font-style:italic">     * page's name
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
     </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
     </font><font color="#629755" style=" font-style:italic">    </font>String pageName()
 
-        <font color="#629755" style=" font-style:italic">/**
+<font color="#629755" style=" font-style:italic">/**
     </font><font color="#629755" style=" font-style:italic">     * page's type,default is USER_PAGE
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
     </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
@@ -187,8 +187,8 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
     <font color="#bbb529">@Page</font>(pageName = <font color="#6a8759">"user page 1"</font>)
     <font color="#cc7832">class </font>Page1 <font color="#cc7832">extends </font>AbstractPage{
 
-        Page1(){
-            <font color="#9876aa">menuPath</font>=<font color="#6a8759">"a->b->c"
+Page1(){
+    <font color="#9876aa">menuPath</font>=<font color="#6a8759">"a->b->c"
     </font><font color="#6a8759">        </font><font color="#9876aa">tabName</font>=<font color="#6a8759">"page1 tab"
     </font><font color="#6a8759">    </font>}
     }
@@ -208,8 +208,8 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
     <font color="#bbb529">@Page</font>(pageName = <font color="#6a8759">"group admin page"</font>,pageType = PageType.<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">GROUP_ADMIN_PAGE</font>)
     <font color="#cc7832">class </font>GroupAdminPage <font color="#cc7832">extends </font>AbstractPage{
-        GroupAdminPage(){
-            <font color="#9876aa">menuPath</font>=<font color="#6a8759">"d->e"
+GroupAdminPage(){
+    <font color="#9876aa">menuPath</font>=<font color="#6a8759">"d->e"
     </font><font color="#6a8759">        </font><font color="#9876aa">tabName</font>=<font color="#cc7832">null
     </font><font color="#cc7832">    </font>}
     }
@@ -246,64 +246,64 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
     <font color="#cc7832">class </font>PageFactory {
 
-        <font color="#808080">//logger
+<font color="#808080">//logger
     </font><font color="#808080">    </font><font color="#cc7832">private final static </font>Logger <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">logger </font>= LogUtils.<font color="#9876aa" style=" font-style:italic">getLogger</font>(PageFactory)
 
-        <font color="#808080">//package contains all pages
+<font color="#808080">//package contains all pages
     </font><font color="#808080">    </font><font color="#cc7832">final static </font>String <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">PACKAGE_NAME </font>= <font color="#6a8759">"pages.production"
     </font><font color="#6a8759">
     </font><font color="#6a8759">    </font><font color="#cc7832">static private </font>Map<String, Class> <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages </font>= <font color="#cc7832">new </font>HashMap<>()
 
-        <font color="#629755" style=" font-style:italic">/**
+<font color="#629755" style=" font-style:italic">/**
     </font><font color="#629755" style=" font-style:italic">     * get all pages
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
     </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
     </font><font color="#629755" style=" font-style:italic">    </font><font color="#cc7832">static </font>Map<String, Class> <font color="#9876aa" style=" font-style:italic">getPages</font>() {
-            <font color="#cc7832">if </font>(<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages</font>.<font color="#9876aa">isEmpty</font>())
-                <font color="#9876aa" style=" font-style:italic">init</font>()
-            <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages
+    <font color="#cc7832">if </font>(<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages</font>.<font color="#9876aa">isEmpty</font>())
+        <font color="#9876aa" style=" font-style:italic">init</font>()
+    <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages
     </font><font color="#d0d0ff" style=" font-weight:bold; font-style:italic">    </font>}
 
-        <font color="#629755" style=" font-style:italic">/**
+<font color="#629755" style=" font-style:italic">/**
     </font><font color="#629755" style=" font-style:italic">     * get a page by page name
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@param </font><font color="#629755" style=" font-style:italic">pageName name of a page
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
     </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
     </font><font color="#629755" style=" font-style:italic">    </font><font color="#cc7832">static </font>Class get(String pageName) {
-           <font color="#cc7832">def </font>pageClass= <font color="#9876aa" style=" font-style:italic">getPages</font>().get(pageName)
-            <font color="#cc7832">if</font>(!pageClass){
-                <font color="#cc7832">throw new </font>ClassNotFoundException(<font color="#6a8759">"can not find page [</font>${pageName}<font color="#6a8759">]"</font>)
-            }
-            pageClass
-        }
+   <font color="#cc7832">def </font>pageClass= <font color="#9876aa" style=" font-style:italic">getPages</font>().get(pageName)
+    <font color="#cc7832">if</font>(!pageClass){
+        <font color="#cc7832">throw new </font>ClassNotFoundException(<font color="#6a8759">"can not find page [</font>${pageName}<font color="#6a8759">]"</font>)
+    }
+    pageClass
+}
 
-        <font color="#629755" style=" font-style:italic">/**
+<font color="#629755" style=" font-style:italic">/**
     </font><font color="#629755" style=" font-style:italic">     * get a page instance
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@param </font><font color="#629755" style=" font-style:italic">pageName name of a page
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
     </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
     </font><font color="#629755" style=" font-style:italic">    </font><font color="#cc7832">static </font>AbstractPage createPage(String pageName) {
-            <font color="#cc7832">def </font>page = <font color="#9876aa" style=" font-style:italic">get</font>(pageName).newInstance()
-            <font color="#cc7832">if </font>(!(page <font color="#cc7832">instanceof </font>AbstractPage)) {
-                <font color="#cc7832">throw new </font>ClassCastException(<font color="#6a8759">"page name [</font>${pageName}<font color="#6a8759">] create a page [</font>${page.<font color="#9876aa">class</font>}<font color="#6a8759">] is not a instance of AbstractPage."</font>)
-            }
-            page
-        }
+    <font color="#cc7832">def </font>page = <font color="#9876aa" style=" font-style:italic">get</font>(pageName).newInstance()
+    <font color="#cc7832">if </font>(!(page <font color="#cc7832">instanceof </font>AbstractPage)) {
+        <font color="#cc7832">throw new </font>ClassCastException(<font color="#6a8759">"page name [</font>${pageName}<font color="#6a8759">] create a page [</font>${page.<font color="#9876aa">class</font>}<font color="#6a8759">] is not a instance of AbstractPage."</font>)
+    }
+    page
+}
 
-        <font color="#629755" style=" font-style:italic">/**
+<font color="#629755" style=" font-style:italic">/**
     </font><font color="#629755" style=" font-style:italic">     * init all pages
     </font><font color="#629755" style=" font-style:italic">     */
     </font><font color="#629755" style=" font-style:italic">    </font><font color="#cc7832">private static void </font>init() {
-            <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages</font>.clear()
-            <font color="#808080">//get all classes of a package by Reflections.
+    <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages</font>.clear()
+    <font color="#808080">//get all classes of a package by Reflections.
     </font><font color="#808080">        </font>Reflections reflections = <font color="#cc7832">new </font>Reflections(<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">PACKAGE_NAME</font>)
-            <font color="#cc7832">def </font>classes = reflections.getTypesAnnotatedWith(<font color="#bbb529">Page</font>)
-            <font color="#cc7832">for </font>(<font color="#cc7832">def </font>page : classes) {
-                <font color="#cc7832">def </font>pageName = page.getAnnotation(<font color="#bbb529">Page</font>).pageName()
-                <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">logger</font>.debug(<font color="#6a8759">"loading [</font>${pageName}<font color="#6a8759">]:[</font>${page}<font color="#6a8759">]"</font>)
-                <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages</font>.put(pageName, page)
-            }
-        }
+    <font color="#cc7832">def </font>classes = reflections.getTypesAnnotatedWith(<font color="#bbb529">Page</font>)
+    <font color="#cc7832">for </font>(<font color="#cc7832">def </font>page : classes) {
+        <font color="#cc7832">def </font>pageName = page.getAnnotation(<font color="#bbb529">Page</font>).pageName()
+        <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">logger</font>.debug(<font color="#6a8759">"loading [</font>${pageName}<font color="#6a8759">]:[</font>${page}<font color="#6a8759">]"</font>)
+        <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages</font>.put(pageName, page)
+    }
+}
     }
 
 

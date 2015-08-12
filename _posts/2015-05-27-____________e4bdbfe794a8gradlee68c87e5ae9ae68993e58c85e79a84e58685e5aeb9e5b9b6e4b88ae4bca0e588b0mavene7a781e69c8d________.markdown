@@ -10,37 +10,36 @@ wordpress_id: 200
 categories:
 - Gradle
 ---
-
 ```groovy
     artifacts {
-        //打包class
-        archives jar
-        //打包javadocs
-        archives javadocJar
-        //打包源码
-        archives sourcesJar
+  //打包class
+  archives jar
+  //打包javadocs
+  archives javadocJar
+  //打包源码
+  archives sourcesJar
     }
 
 
     uploadArchives {
-        repositories {
-            mavenDeployer {
-                //group id
-                pom.groupId = this.group
-                //artifact id
-                pom.artifactId = this.archivesBaseName
-                //version
-                pom.version = this.version
-                //maven url
-                repository(url: project.mavenUrl + "content/repositories/thirdparty/") {
-                    //username password
-                    authentication(
-                            userName: "admin",
-                            password: "admin123"
-                    )
-                }
+  repositories {
+mavenDeployer {
+    //group id
+    pom.groupId = this.group
+    //artifact id
+    pom.artifactId = this.archivesBaseName
+    //version
+    pom.version = this.version
+    //maven url
+    repository(url: project.mavenUrl + "content/repositories/thirdparty/") {
+        //username password
+        authentication(
+                userName: "admin",
+                password: "admin123"
+        )
+    }
 
-            }
-        }
+}
+  }
     }
 ```
