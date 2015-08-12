@@ -45,6 +45,7 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 ```
     yum install 'graphviz*'
 ```
+
 ### 2、修改_**$gems/gollum-4.0.0/bin/**_下的_**gollum**_执行文件，对_**opts**_对象增加_**dot**_参数支持，修改后的_**opts**_对象如下：
 
 
@@ -156,7 +157,9 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
       opts.on("--dot [PATH]", "Path to graphviz dot.") do |path|
         wiki_options[:dot] = path
       end
-    end```
+    end
+```
+
 
 ###3、修改**_$gems/gollum-4.0.0/lib/gollum/_**下的_**apps.rb**_，增加对graphviz生成的png文件支持。修改模块_**Precious**_下的_**App**_类，增加一个方法（在get %r方法后增加即可）：
 
@@ -172,6 +175,7 @@ get %r{tmp/([0-9a-f]{40})\.png} do
   # Use Sinatra's send_file because the pngs are not in git.
   send_file file, :type => 'image/png'
 end```
+
 ###4、为gollum的markup增加graphviz标签支持以及图形转换，修改**_$gem/gollum-lib-4.0.X/lib/gollum-lib/_**目录下的文件_**markup.rb**_，在class中增加一个函数**_process_graphviz_**：
 
 
