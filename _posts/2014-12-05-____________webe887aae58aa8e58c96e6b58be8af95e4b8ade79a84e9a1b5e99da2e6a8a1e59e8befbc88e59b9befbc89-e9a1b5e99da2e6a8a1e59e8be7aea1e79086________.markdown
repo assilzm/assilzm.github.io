@@ -20,7 +20,7 @@ categories:
 
 
 
- 
+
 
 
 
@@ -42,9 +42,9 @@ categories:
 
 
 
-    
-    
-    
+
+
+
         static Map<String, Class> BUILTIN_PAGES = new HashMap<String, Class>(){
             {
                 put("Login Page", LoginPage.class)
@@ -58,7 +58,7 @@ categories:
 
 
 
-  
+
 
 当然也可能是其他形式，这里先以Map形式来说明，配合这个map，可能会有一个方法来创建一个具体的页面：
 
@@ -66,9 +66,9 @@ categories:
 
 
 
-    
-    
-    
+
+
+
         static Object createPage(pageName){
             return BUILTIN_PAGES.get(pageName).newInstance()
         }
@@ -78,7 +78,7 @@ categories:
 
 
 
-  
+
 
 那么，问题就来了，随着页面的增多，Map对象会越来越来管理，特别是如果某些特殊的情况下类名或者包名还可能会重复，将来维护起来也会很困难。
 
@@ -88,7 +88,7 @@ categories:
 
 
 
- 
+
 
 
 
@@ -126,20 +126,20 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
 
 
-    
-    
+
+
     <font color="#bbb529">@Documented
     </font><font color="#bbb529">@Target</font>(ElementType.<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">TYPE</font>)
     <font color="#bbb529">@Retention</font>(RetentionPolicy.<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">RUNTIME</font>)
     <font color="#bbb529">@Inherited
     </font><font color="#cc7832">public </font>@<font color="#cc7832">interface </font><font color="#bbb529">Page </font>{
-    
+
         <font color="#629755" style=" font-style:italic">/**
     </font><font color="#629755" style=" font-style:italic">     * page's name
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
     </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
     </font><font color="#629755" style=" font-style:italic">    </font>String pageName()
-    
+
         <font color="#629755" style=" font-style:italic">/**
     </font><font color="#629755" style=" font-style:italic">     * page's type,default is USER_PAGE
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
@@ -160,7 +160,7 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
 
 
- 
+
 
 
 
@@ -182,11 +182,11 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
 
 
-    
-    
+
+
     <font color="#bbb529">@Page</font>(pageName = <font color="#6a8759">"user page 1"</font>)
     <font color="#cc7832">class </font>Page1 <font color="#cc7832">extends </font>AbstractPage{
-    
+
         Page1(){
             <font color="#9876aa">menuPath</font>=<font color="#6a8759">"a->b->c"
     </font><font color="#6a8759">        </font><font color="#9876aa">tabName</font>=<font color="#6a8759">"page1 tab"
@@ -204,8 +204,8 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
 
 
-    
-    
+
+
     <font color="#bbb529">@Page</font>(pageName = <font color="#6a8759">"group admin page"</font>,pageType = PageType.<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">GROUP_ADMIN_PAGE</font>)
     <font color="#cc7832">class </font>GroupAdminPage <font color="#cc7832">extends </font>AbstractPage{
         GroupAdminPage(){
@@ -213,7 +213,7 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
     </font><font color="#6a8759">        </font><font color="#9876aa">tabName</font>=<font color="#cc7832">null
     </font><font color="#cc7832">    </font>}
     }
-    
+
 
 
 
@@ -228,7 +228,7 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
 
 
- 
+
 
 
 
@@ -242,18 +242,18 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
 
 
-    
-    
+
+
     <font color="#cc7832">class </font>PageFactory {
-    
+
         <font color="#808080">//logger
     </font><font color="#808080">    </font><font color="#cc7832">private final static </font>Logger <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">logger </font>= LogUtils.<font color="#9876aa" style=" font-style:italic">getLogger</font>(PageFactory)
-    
+
         <font color="#808080">//package contains all pages
     </font><font color="#808080">    </font><font color="#cc7832">final static </font>String <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">PACKAGE_NAME </font>= <font color="#6a8759">"pages.production"
-    </font><font color="#6a8759">    
+    </font><font color="#6a8759">
     </font><font color="#6a8759">    </font><font color="#cc7832">static private </font>Map<String, Class> <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages </font>= <font color="#cc7832">new </font>HashMap<>()
-    
+
         <font color="#629755" style=" font-style:italic">/**
     </font><font color="#629755" style=" font-style:italic">     * get all pages
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
@@ -263,11 +263,11 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
                 <font color="#9876aa" style=" font-style:italic">init</font>()
             <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages
     </font><font color="#d0d0ff" style=" font-weight:bold; font-style:italic">    </font>}
-    
+
         <font color="#629755" style=" font-style:italic">/**
     </font><font color="#629755" style=" font-style:italic">     * get a page by page name
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@param </font><font color="#629755" style=" font-style:italic">pageName name of a page
-    </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return 
+    </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
     </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
     </font><font color="#629755" style=" font-style:italic">    </font><font color="#cc7832">static </font>Class get(String pageName) {
            <font color="#cc7832">def </font>pageClass= <font color="#9876aa" style=" font-style:italic">getPages</font>().get(pageName)
@@ -276,7 +276,7 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
             }
             pageClass
         }
-    
+
         <font color="#629755" style=" font-style:italic">/**
     </font><font color="#629755" style=" font-style:italic">     * get a page instance
     </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@param </font><font color="#629755" style=" font-style:italic">pageName name of a page
@@ -289,9 +289,9 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
             }
             page
         }
-    
+
         <font color="#629755" style=" font-style:italic">/**
-    </font><font color="#629755" style=" font-style:italic">     * init all pages 
+    </font><font color="#629755" style=" font-style:italic">     * init all pages
     </font><font color="#629755" style=" font-style:italic">     */
     </font><font color="#629755" style=" font-style:italic">    </font><font color="#cc7832">private static void </font>init() {
             <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages</font>.clear()
@@ -319,7 +319,7 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
 
 
- 
+
 
 
 
@@ -333,8 +333,8 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
 
 
-    
-    
+
+
     PageFactory.<font color="#9876aa" style=" font-style:italic">createPage</font>(pageName)
 
 
@@ -350,7 +350,7 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
 
 
- 
+
 
 
 
@@ -367,7 +367,3 @@ pages包里包含了页面相关的内容。我们简单的设计下Page这个�
 
 
 示例工程地址：[https://github.com/assilzm/PageObjectFactoryDemo](https://github.com/assilzm/PageObjectFactoryDemo)
-
-
-
-

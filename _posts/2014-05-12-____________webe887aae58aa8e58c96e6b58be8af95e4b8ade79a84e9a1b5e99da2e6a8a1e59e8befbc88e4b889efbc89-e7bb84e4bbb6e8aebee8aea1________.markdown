@@ -45,7 +45,7 @@ _但是，通常情况下会遇到一些个小问题：由于组件是通用的�
 
 
 
- 
+
 
 
 
@@ -83,53 +83,53 @@ _但是，通常情况下会遇到一些个小问题：由于组件是通用的�
 
 
 
-    
-    
+
+
     /**
      * Grid component
      * @author Assilzm
      * createTime 2014-5-12.
      */
     class Grid extends WebActions {
-    
+
         /**
          * default container tag name
          */
         final static String DEFAULT_CONTAINER_TAGNAME = "div"
-    
+
         /**
          * default container attribute
          */
         final static String DEFAULT_CONTAINER_ATTRIBUTE = "class"
-    
+
         /**
          * default container attribute value
          */
         final static String DEFAULT_CONTAINER_ATTRIBUTEVALUE = "nui-table"
-    
+
         final static String TABLE_TAGNAME = "table"
-    
+
         final static String TR_TAGNAME = "tr"
-    
+
         final static String TD_TAGNAME = "td"
-    
+
         final static String TABLE_HEAD_TAGNAME = "thead"
-    
+
         final static String TABLE_BODY_TAGNAME = "tbody"
-    
-    
+
+
         /**
          * current grid container selector
          */
         String containerSelector
-    
+
         /**
          * current grid container selector with default value
          */
         Grid() {
             containerSelector = "//$DEFAULT_CONTAINER_TAGNAME[@$DEFAULT_CONTAINER_ATTRIBUTE='$DEFAULT_CONTAINER_ATTRIBUTEVALUE']"
         }
-    
+
         /**
          * current grid container selector with custom value
          * @param selector
@@ -142,9 +142,9 @@ _但是，通常情况下会遇到一些个小问题：由于组件是通用的�
 
 
 
-    
-    
-     
+
+
+
 
 
 
@@ -173,8 +173,8 @@ _但是，通常情况下会遇到一些个小问题：由于组件是通用的�
 
 
 
-    
-    
+
+
         /**
          * find a cell element with row index and colum index
          * @param row
@@ -204,8 +204,8 @@ _但是，通常情况下会遇到一些个小问题：由于组件是通用的�
 
 
 
-    
-    
+
+
     ContactsPage contactsPage=new ContactsPage()
     contactsPage.grid.getCell(row,column)
 
@@ -236,8 +236,8 @@ _但是，通常情况下会遇到一些个小问题：由于组件是通用的�
 
 
 
-    
-    
+
+
         /**
          * find a cell element with column head text and cell text
          * @param headText
@@ -255,7 +255,7 @@ _但是，通常情况下会遇到一些个小问题：由于组件是通用的�
                 cell= findElement("$containerSelector/$TABLE_TAGNAME/$TABLE_BODY_TAGNAME/$TR_TAGNAME[$trIndex]/$TD_TAGNAME[$headIndex]")
             return  cell
         }
-    
+
         /**
          * get all head text
          * @return
@@ -269,7 +269,7 @@ _但是，通常情况下会遇到一些个小问题：由于组件是通用的�
 
 
 
- 
+
 
 
 
@@ -291,15 +291,15 @@ _但是，通常情况下会遇到一些个小问题：由于组件是通用的�
 
 
 
-    
-    
+
+
         final static String FRAME="frame"
-    
+
         /**
          * grid component
          */
         Grid grid
-    
+
         /**
          * init component with getter
          * @return
@@ -331,23 +331,3 @@ _但是，通常情况下会遇到一些个小问题：由于组件是通用的�
 
 
 接下来可能会讲一些复杂情况的页面设计，找到合适的例子我会来更新。
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
- 
-
-
-
-

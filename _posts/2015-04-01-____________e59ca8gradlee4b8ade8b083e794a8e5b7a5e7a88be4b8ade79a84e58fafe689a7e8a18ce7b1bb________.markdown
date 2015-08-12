@@ -18,14 +18,3 @@ categories:
         //所需要包含的包,sourceSets.main.runtimeClasspath的值为sourceSets中设置main对象中包含的包路径
         classpath = sourceSets.main.runtimeClasspath
     }
-
-
-
-
-
-
- 
-
-
-
-

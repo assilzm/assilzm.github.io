@@ -12,7 +12,7 @@ categories:
 - 自动化
 ---
 
-# 
+#
 工程结构
 
 
@@ -29,7 +29,7 @@ categories:
 
 
 
- 
+
 
 
 
@@ -44,7 +44,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
-# 
+#
 底层操作类
 
 
@@ -61,7 +61,6 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
- 
 
 
 
@@ -69,23 +68,24 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
- 因此我这里设计了一个很简单的操作类,我们今后的所有页面都将继承自该底层操作类，其中选择器部分直接使用String，Xpath还是其他就大家随意。为配合示例在这里暂时设计几个简单的方法，点击、输入、获取内容等等。 
+
+ 因此我这里设计了一个很简单的操作类,我们今后的所有页面都将继承自该底层操作类，其中选择器部分直接使用String，Xpath还是其他就大家随意。为配合示例在这里暂时设计几个简单的方法，点击、输入、获取内容等等。
 
 
 
 
 
-    
-    
+
+
     abstract class WebActions {
-    
+
         /***
          * webdriver of current browser instance
          */
         static WebDriver driver
-    
+
         private final static Logger logger=LogUtils.getLogger(WebActions)
-    
+
         /**
          * init webdriver
          * @param driver
@@ -93,7 +93,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         static void setDriver(WebDriver driver) {
             this.driver = driver
         }
-    
+
         /**
          * get webdriver
          * @param driver
@@ -101,7 +101,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         static WebDriver getDriver() {
             return driver
         }
-    
+
         /**
          * find element by xpath
          * @param selector
@@ -111,7 +111,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
             logger.debug("get a element with xpath $selector")
             return driver.findElement(By.xpath(selector))
         }
-    
+
         /**
          * find elements by xpath
          * @param selector
@@ -121,7 +121,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
             logger.debug("get elements with xpath $selector")
             return driver.findElements(By.xpath(selector))
         }
-    
+
         /**
          * click at a element
          * @param selector  selector of the element
@@ -129,7 +129,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         void click(String selector){
             logger.debug("click at [$selector]")
         }
-    
+
         /**
          * type in a element
          * @param selector selector of the element
@@ -138,7 +138,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         void type(String selector,String text){
             logger.debug("type [$text] in [$selector]")
         }
-    
+
         /**
          * get attribute of a element
          * @param selector selector of the element
@@ -148,7 +148,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         String getValue(String selector,String attributeName){
             return "[$attributeName] value of [$selector]"
         }
-    
+
         /**
          * get attribute of a elements
          * @param selector selector of the elements
@@ -158,7 +158,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         List<String> getValues(String selector,String attributeName){
             return ["[$attributeName] value of [$selector]"]
         }
-    
+
         /**
          * get text of a element
          * @param selector selector of the element
@@ -167,7 +167,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         String getText(String selector){
             return "text of [$selector]"
         }
-    
+
         /**
          * get text of a elements
          * @param selector selector of the elements
@@ -176,7 +176,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         List<String> getTexts(String selector){
             return ["texts of [$selector]"]
         }
-    
+
         /**
          * select a radio
          * @param selector  selector of the element
@@ -184,7 +184,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         void selectRadio(String selector){
             logger.debug("select radio in [$selector]")
         }
-    
+
         /**
          * unselect a radio
          * @param selector  selector of the element
@@ -192,7 +192,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         void unSelectRadio(String selector){
             logger.debug("unselect radio in [$selector]")
         }
-    
+
         /**
          * select a checkbox
          * @param selector  selector of the element
@@ -200,7 +200,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         void selectCheckBox(String selector){
             logger.debug("select checkbox in [$selector]")
         }
-    
+
         /**
          * unselect a checkbox
          * @param selector  selector of the element
@@ -208,7 +208,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         void unSelectCheckBox(String selector){
             logger.debug("unselect checkbox in [$selector]")
         }
-    
+
         /**
          * get current window title
          * @return current window title
@@ -216,7 +216,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         String getTitle(){
             return  "window title"
         }
-    
+
         /**
          * switch to frame
          * @param framePath frame path
@@ -224,14 +224,14 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
         void switchFrame(String framePath){
             logger.debug("switch to frame $framePath")
         }
-    
+
     }
 
 
 
 
 
-# 
+#
 登陆页面
 
 
@@ -248,7 +248,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
- 
+
 
 
 
@@ -264,7 +264,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
- 
+
 
 
 
@@ -278,44 +278,44 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
-    
-    
+
+
     package email.pages
-    
+
     import common.model.WebActions
-    
-    
+
+
     /**
      * email login page
      * Created by Assilzm on 2014/5/9.
      */
     class LoginPage extends WebActions{
-    
+
         /**
          * login page tilte
          */
         final static String LOGIN_PAGE_TITLE="LOGIN_PAGE_TITLE"
-    
+
         /**
          * user name input element selector
          */
         final static String USER_NAME_ELEMENT_SELECTOR="USER_NAME_ELEMENT_SELECTOR"
-    
+
         /**
          * password input element selector
          */
         final static String PASSWORD_ELEMENT_SELECTOR="PASSWORD_ELEMENT_SELECTOR"
-    
+
         /**
          * auto login input element selector
          */
         final static String AUTO_LOGIN_ELEMENT_SELECTOR="AUTO_LOGIN_ELEMENT_SELECTOR"
-    
+
         /**
          * submit button element selector
          */
         final static String SUBMIT_ELEMENT_SELECTOR="SUBMIT_ELEMENT_SELECTOR"
-    
+
         /**
          * login the email system
          * @param userName username
@@ -330,14 +330,14 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
             click(SUBMIT_ELEMENT_SELECTOR)
         }
     }
-    
 
 
 
 
 
 
- 
+
+
 
 
 
@@ -351,8 +351,8 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
-    
-    
+
+
     new LoginPage().login(userName,passWord)
 
 
@@ -368,7 +368,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
- 
+
 
 
 
@@ -382,8 +382,8 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
-    
-    
+
+
         @Test
         void testLogin() {
             LoginPage loginPage=new LoginPage()
@@ -406,7 +406,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
- 
+
 
 
 
@@ -428,8 +428,8 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
-    
-    
+
+
         HomePage loginSuccess(String userName,String password,boolean autoLogin=false){
             assertThat("assert login page title contains $loginPage.LOGIN_PAGE_TITLE",loginPage.getTitle(),containsString(loginPage.LOGIN_PAGE_TITLE))
             type(USER_NAME_ELEMENT_SELECTOR,userName)
@@ -453,8 +453,8 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
-    
-    
+
+
     LoginPage loginPage=new LoginPage()
     HomePage homePage=loginPage.loginSuccess(userName,password)
 
@@ -463,7 +463,7 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
 
- 
+
 
 
 
@@ -480,7 +480,3 @@ _为了让不了解Groovy的同学理解，这里对字符串的连接进行一�
 
 
  组件设计方到后面去写。
-
-
-
-

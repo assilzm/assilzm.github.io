@@ -28,7 +28,7 @@ categories:
         destinationDir=new File("artifacts/")
         //自定义jar包名称，如不自定义会为baseName+version+classifier.jar
         //archiveName="demo.jar"
-    
+
         //from对象接受一个文件路径集合，包含要打包到jar中的文件
         from {
             //从工程编译输出的目录中递归包含所有文件及其路径结构
@@ -45,7 +45,3 @@ categories:
 
 
 上述代码是一个task，可供单独执行，当然也可以重写Gradle默认的jar方法来实现打包，将task releaseJar(type: Jar) 改为jar即可。
-
-
-
-

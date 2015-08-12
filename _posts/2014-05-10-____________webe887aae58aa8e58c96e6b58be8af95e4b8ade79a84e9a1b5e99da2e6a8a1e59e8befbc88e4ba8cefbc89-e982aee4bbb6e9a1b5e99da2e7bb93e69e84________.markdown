@@ -45,7 +45,7 @@ categories:
 
 
 
- 
+
 
 
 
@@ -83,42 +83,42 @@ categories:
 
 
 
-    
-    
+
+
     package email.pages
-    
+
     import common.model.WebActions
     import email.component.SearchCondition
     import email.component.Tab
     import email.component.ToolBar
-    
+
     /**
      * main frame
      * @author Assilzm
      * @createTime 2014-5-10 11:23.
      */
     abstract class MainFrame extends WebActions{
-    
+
         /**
          * email page tilte after login
          */
         final static String EMAIL_PAGE_TITLE="EMAIL_PAGE_TITLE"
-    
+
         /**
-         * toolBar 
+         * toolBar
          */
         ToolBar toolBar=new ToolBar()
         /**
          * tab
          */
         Tab tab=new Tab()
-    
+
         /**
          * searchCondition
          */
         SearchCondition searchCondition=new SearchCondition()
     }
-    
+
 
 
 
@@ -155,17 +155,17 @@ categories:
 
 
 
-    
-    
+
+
     /**
      * home page tab in main frame
      * @author Assilzm
      * @createTime 2014-5-10 11:27.
      */
     class HomePage extends MainFrame{
-    
+
         MailMenu mailMenu=new MailMenu()
-    
+
     }
 
 
@@ -179,8 +179,8 @@ categories:
 
 
 
-    
-    
+
+
         @Test
         void testGetInBoxPendingNumber(){
             HomePage homePage=new HomePage()
@@ -218,7 +218,3 @@ categories:
 
 
 下一章将会将怎么去设计一个组件：《[WEB自动化测试中的页面模型（三）-组件设计](http://www.assilzm.com/?p=129)》
-
-
-
-

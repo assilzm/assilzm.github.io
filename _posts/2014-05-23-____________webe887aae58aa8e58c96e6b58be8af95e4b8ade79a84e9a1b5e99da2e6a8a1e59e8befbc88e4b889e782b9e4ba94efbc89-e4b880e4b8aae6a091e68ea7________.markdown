@@ -29,7 +29,7 @@ categories:
 
 
 
- 
+
 
 
 
@@ -101,7 +101,7 @@ _4、子节点在父节点的子元素中。_
 
 
 
- 
+
 
 
 
@@ -157,7 +157,7 @@ _5、开关的选择器特征，以及打开、关闭状态的选择器特征_
 
 
 
- 
+
 
 
 
@@ -171,72 +171,72 @@ _5、开关的选择器特征，以及打开、关闭状态的选择器特征_
 
 
 
-    
-    
+
+
         private final static Logger logger = LogUtils.getLogger(Tree)
-    
+
         /**
          * tree container tag name
          */
         final static String CONTAINER_TAG_NAME = 'div'
-    
+
         /**
          * tree container attribute name
          */
         final static String CONTAINER_ATTRIBUTE_NAME = "class"
-    
+
         /**
          * tree container attribute value
          */
         final static String CONTAINER_ATTRIBUTE_VALUE = "zTreeDemoBackground"
-    
+
         /**
          * switcher selector
          */
         final static String SWITCHER_SELECTOR = "span[starts-with(@class,'ico_')]"
-    
+
         /**
          * switcher attribute to verify
          */
         final static String SWITCHER_ATTRIBUTE_NAME = "class"
-    
+
         /**
          * tree node switcher closed class
          */
         final static String SWITCHER_CLOSED_ATTRIBUTE_VALUE = "ico_close"
-    
+
         /**
          * tree node switcher opened class
          */
         final static String SWITCHER_OPENED_ATTRIBUTE_VALUE = "ico_open"
-    
+
         /**
          * root node selector
          */
         final static String ROOT_NODE_SELECTOR = "ul[@class='ztree']/li[@class='level0']"
-    
+
         /**
          * node element tag name
          */
         final static String NODE_SELECTOR = "a"
-    
+
         /**
          * sub node container selector
          */
         final static String SUB_NODE_CONTAINER_SELECTOR = "ul/li"
-    
+
         /**
          * container selector
          */
         String containerSelector = null
-    
+
         /**
          * current tree container selector with default value
          */
         Tree() {
             containerSelector = "//$CONTAINER_TAG_NAME[@$CONTAINER_ATTRIBUTE_NAME='$CONTAINER_ATTRIBUTE_VALUE']"
         }
-    
+
         /**
          * current grid container selector with custom value
          * @param selector
@@ -250,7 +250,7 @@ _5、开关的选择器特征，以及打开、关闭状态的选择器特征_
 
 
 
- 
+
 
 
 
@@ -328,8 +328,8 @@ getNodeSelector：
 
 
 
-    
-    
+
+
         /**
          * get node selector with node path list
          * @param pathList node path,eg:[rootNodeText,firstNodeText,secondNodeText]
@@ -359,8 +359,8 @@ getSubNodeSelector：
 
 
 
-    
-    
+
+
         /**
          * get a sub node selector with displayed text of a node selector
          * @param nodeSelector father node selector
@@ -381,7 +381,7 @@ getSubNodeSelector：
 
 
 
- 
+
 
 
 
@@ -395,8 +395,8 @@ unfoldNode：
 
 
 
-    
-    
+
+
         /**
          * unfold a father node
          * @param nodeSelector father node selector
@@ -424,8 +424,8 @@ unfoldNode：
 
 
 
-    
-    
+
+
         /**
          * click at a node
          * @param pathList node path,eg:[rootNodeText,firstNodeText,secondNodeText]
@@ -463,8 +463,8 @@ _PS:细心的同学可以可以发现，我们定义的根节点根本没有用�
 
 
 
-    
-    
+
+
             Tree tree=new Tree()
             String nodePath="父节点1->父节点12->叶子节点122";
             List<String> nodeList= Arrays.asList(nodePath.split("->"))
@@ -476,7 +476,3 @@ _PS:细心的同学可以可以发现，我们定义的根节点根本没有用�
 
 
 补充就到这里，复杂页面的设计我有空了会更新。
-
-
-
-
