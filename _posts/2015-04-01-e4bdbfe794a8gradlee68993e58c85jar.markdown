@@ -37,7 +37,7 @@ task releaseJar(type: Jar) {
   }
   with jar
 }
-```groovy
+```
 
 
 
