@@ -27,200 +27,152 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 
 
 
- 
 
 
 
 
 
 
-### 
-1、先在机器上安装graphviz
+
+### 1、先在机器上安装graphviz
 
 
 
 
 
-    
-    
+
+
+```shell
     yum install 'graphviz*'
+```
+### 2、修改_**$gems/gollum-4.0.0/bin/**_下的_**gollum**_执行文件，对_**opts**_对象增加_**dot**_参数支持，修改后的_**opts**_对象如下：
 
 
 
 
 
 
- 
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-### 
-2、修改_**$gems/gollum-4.0.0/bin/**_下的_**gollum**_执行文件，对_**opts**_对象增加_**dot**_参数支持，修改后的_**opts**_对象如下：
-
-
-
-
-
-    
-    
+```ruby
     opts = OptionParser.new do |opts|
       opts.banner = help
-    
+
       opts.on("--port [PORT]", "Bind port (default 4567).") do |port|
         options['port'] = port.to_i
       end
-    
+
       opts.on("--host [HOST]", "Hostname or IP address to listen on (default 0.0.0.0).") do |host|
         options['bind'] = host
       end
-    
+
       opts.on("--version", "Display current version.") do
         puts "Gollum " + Gollum::VERSION
         exit 0
       end
-    
+
       opts.on("--config [CONFIG]", "Path to additional configuration file") do |config|
         options['config'] = config
       end
-    
+
       opts.on("--adapter [ADAPTER]", "Git adapter to use in the backend. Defaults to grit.") do |adapter|
         Gollum::GIT_ADAPTER = adapter
       end
-    
+
       opts.on("--irb", "Start an irb process with gollum loaded for the current wiki.") do
         options['irb'] = true
       end
-    
+
       opts.on("--css", "Inject custom css. Uses custom.css from root repository") do
         wiki_options[:css] = true
       end
-    
+
       opts.on("--js", "Inject custom js. Uses custom.js from root repository") do
         wiki_options[:js] = true
       end
-    
+
       opts.on("--template-dir [PATH]", "Specify custom template directory") do |path|
         wiki_options[:template_dir] = path
       end
-    
+
       opts.on("--page-file-dir [PATH]", "Specify the sub directory for all page files (default: repository root).") do |path|
         wiki_options[:page_file_dir] = path
       end
-    
+
       opts.on("--base-path [PATH]", "Specify the base path for the served pages (default: /) Example: --base-path wiki yields the home page accessible at http://localhost:4567/wiki/.") do |path|
         wiki_options[:base_path] = path
       end
-    
+
       opts.on("--gollum-path [PATH]", "Specify the path to the git repository to be served.") do |path|
         wiki_options[:gollum_path] = path
       end
-    
+
       opts.on("--ref [REF]", "Specify the repository ref to use (default: master).") do |ref|
         wiki_options[:ref] = ref
       end
-    
+
       opts.on("--bare", "Specify that the repository is bare (only necessary when using the grit adapter).") do
         wiki_options[:repo_is_bare] = true
       end
-    
+
       opts.on("--no-edit", "Restricts editing capability through frontend.")  do
         wiki_options[:allow_editing] = false
       end
-    
+
       opts.on("--no-live-preview", "Disables livepreview.") do
         wiki_options[:live_preview] = false
       end
-    
+
       opts.on("--live-preview", "Enables livepreview.") do
         wiki_options[:live_preview] = true
       end
-    
+
       opts.on("--allow-uploads [MODE]", [:dir, :page], "Allows file uploads. Modes: dir (default, store all uploads in the same directory), page (store each upload at the same location as the page).") do |mode|
         wiki_options[:allow_uploads]    = true
         wiki_options[:per_page_uploads] = true if mode == :page
       end
-    
+
       opts.on("--mathjax", "Enables mathjax for rendering mathematical equations. Uses the TeX-AMS-MML_HTMLorMML config with the autoload-all extension by default.") do
         wiki_options[:mathjax] = true
       end
-    
+
       opts.on("--mathjax-config [SOURCE]", "Inject custom mathjax config file. Uses mathjax.config.js from root repository by default") do |source|
         wiki_options[:mathjax_config] = source || 'mathjax.config.js'
       end
-    
+
       opts.on("--user-icons [SOURCE]", "Set the history user icons. Valid values: gravatar, identicon, none. Default: none.") do |source|
         wiki_options[:user_icons] = source
       end
-    
+
       opts.on("--show-all", "Shows all files in file view. By default only valid pages are shown.") do
         wiki_options[:show_all] = true
       end
-    
+
       opts.on("--collapse-tree", "Collapse file view tree. By default, expanded tree is shown.") do
         wiki_options[:collapse_tree] = true
       end
       opts.on("--h1-title", "Sets page title to value of first h1") do
         wiki_options[:h1_title] = true
       end
-    
+
       opts.on("--dot [PATH]", "Path to graphviz dot.") do |path|
         wiki_options[:dot] = path
       end
-    end
+    end```
+
+###3、修改**_$gems/gollum-4.0.0/lib/gollum/_**下的_**apps.rb**_，增加对graphviz生成的png文件支持。修改模块_**Precious**_下的_**App**_类，增加一个方法（在get %r方法后增加即可）：
 
 
 
 
 
 
- 
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-### 
-3、修改**_$gems/gollum-4.0.0/lib/gollum/_**下的_**apps.rb**_，增加对graphviz生成的png文件支持。修改模块_**Precious**_下的_**App**_类，增加一个方法（在get %r方法后增加即可）：
-
-
-
-
-
-    
-    
-        # graphviz image
-        get %r{tmp/([0-9a-f]{40})\.png} do
-          file = ::File.open ::File.expand_path ::File.join wiki_new.path, "tmp/#{params[:captures][0]}.png"
-          # Use Sinatra's send_file because the pngs are not in git.
-          send_file file, :type => 'image/png'
-        end
-
-
-
-
-
-
- 
+```ruby
+# graphviz image
+get %r{tmp/([0-9a-f]{40})\.png} do
+  file = ::File.open ::File.expand_path ::File.join wiki_new.path, "tmp/#{params[:captures][0]}.png"
+  # Use Sinatra's send_file because the pngs are not in git.
+  send_file file, :type => 'image/png'
+end```
+###4、为gollum的markup增加graphviz标签支持以及图形转换，修改**_$gem/gollum-lib-4.0.X/lib/gollum-lib/_**目录下的文件_**markup.rb**_，在class中增加一个函数**_process_graphviz_**：
 
 
 
@@ -228,44 +180,29 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 
 
 
- 
+```ruby
+def process_graphviz(data)
+  data.gsub(/\<graphviz\>\s*([\s\S]*?)\s*\<\/graphviz\>/m) do
+    id  = Digest::SHA1.hexdigest($1)
 
+    # Write graphviz graph to temp file
+    tmp = Tempfile.new ''
+    tmp.write $1
+    tmp.close
 
+    out_path_dir = ::File.expand_path ::File.join(@wiki.path, 'tmp')
+    Dir.mkdir out_path_dir unless ::File.exists? out_path_dir
+    out_path = ::File.join(out_path_dir, id)
 
+    system "#{@wiki.dot} -Tpng -o #{out_path}.png #{tmp.path}"
 
+    # Clean up tmp file
+    tmp.delete
 
-
-### 
-4、为gollum的markup增加graphviz标签支持以及图形转换，修改**_$gem/gollum-lib-4.0.X/lib/gollum-lib/_**目录下的文件_**markup.rb**_，在class中增加一个函数**_process_graphviz_**：
-
-
-
-
-
-    
-    
-        def process_graphviz(data)
-          data.gsub(/\<graphviz\>\s*([\s\S]*?)\s*\<\/graphviz\>/m) do
-            id  = Digest::SHA1.hexdigest($1)
-    
-            # Write graphviz graph to temp file
-            tmp = Tempfile.new ''
-            tmp.write $1
-            tmp.close
-    
-            out_path_dir = ::File.expand_path ::File.join(@wiki.path, 'tmp')
-            Dir.mkdir out_path_dir unless ::File.exists? out_path_dir
-            out_path = ::File.join(out_path_dir, id)
-    
-            system "#{@wiki.dot} -Tpng -o #{out_path}.png #{tmp.path}"
-    
-            # Clean up tmp file
-            tmp.delete
-    
-            # Replace graph with img link
-            %Q(<img alt="Graphviz image" src="/tmp/#{id}.png">)
-          end
-        end
+    # Replace graph with img link
+    %Q(<img alt="Graphviz image" src="/tmp/#{id}.png">)
+  end
+end```
 
 
 
@@ -278,84 +215,45 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 
 
 
-    
-    
-        def render(no_follow = false, encoding = nil, include_levels = 10)
-          @sanitize = no_follow ?
-              @wiki.history_sanitizer :
-              @wiki.sanitizer
-    
-          @encoding       = encoding
-          @include_levels = include_levels
-    
-          data         = @data.dup
-          data         = process_graphviz(data) if @wiki.dot
-          filter_chain = @wiki.filter_chain.map do |r|
-            Gollum::Filter.const_get(r).new(self)
-          end
-    
-          # Since the last 'extract' action in our chain *should* be the markup
-          # to HTML converter, we now have HTML which we can parse and yield, for
-          # anyone who wants it
-          if block_given?
-            yield Nokogiri::HTML::DocumentFragment.parse(data)
-          end
-    
-          process_chain data, filter_chain
-        end
 
+```ruby
+def render(no_follow = false, encoding = nil, include_levels = 10)
+  @sanitize = no_follow ?
+      @wiki.history_sanitizer :
+      @wiki.sanitizer
 
+  @encoding       = encoding
+  @include_levels = include_levels
 
+  data         = @data.dup
+  data         = process_graphviz(data) if @wiki.dot
+  filter_chain = @wiki.filter_chain.map do |r|
+    Gollum::Filter.const_get(r).new(self)
+  end
 
+  # Since the last 'extract' action in our chain *should* be the markup
+  # to HTML converter, we now have HTML which we can parse and yield, for
+  # anyone who wants it
+  if block_given?
+    yield Nokogiri::HTML::DocumentFragment.parse(data)
+  end
 
-
- 
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-### 
-5、修改_**$gems/gollum-lib-4.0.X/lib/gollum-lib/**_下的_**wiki.rb**_，在**_initialize_**方法中增加一个对象**_@dot_**：
-
-
-
-
-
-    
-    
-    @dot                  = options.fetch :dot, false
-
-
-
-
-
-
+  process_chain data, filter_chain
+end```
+###5、修改_**$gems/gollum-lib-4.0.X/lib/gollum-lib/**_下的_**wiki.rb**_，在**_initialize_**方法中增加一个对象**_@dot_**：
+```ruby
+    @dot = options.fetch :dot, false```
 增加一个Internal Methods的_**attr_reader**_
+```ruby
+attr_reader :dot
+```
 
-
-
-
-
-    
-    
-        <em>attr_reader :dot</em>
 
 
 
 
 
 
- 
 
 
 
@@ -369,17 +267,17 @@ OK，搞定。启动gollum的时候使用dot参数启动即可。
 
 
 
-    
-    
+
+```shell
     gollum --dot /usr/bin/dot /wikidir/wiki
 
+```
 
 
 
 
-
-现在在编辑wiki的时候使用<graphviz></graphviz>标签包起来graphviz代码即可在文章中显示graphviz流程图了。
-
-
-
-
+现在在编辑wiki的时候使用
+```
+<graphviz></graphviz>
+```
+标签包起来graphviz代码即可在文章中显示graphviz流程图了。

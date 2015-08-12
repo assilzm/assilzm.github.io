@@ -27,7 +27,7 @@ categories:
 
 
 
- 
+
 
 
 
@@ -51,15 +51,14 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 
 
 
- 
 
 
 
 
 
 
-## 
-1、下载一份plantuml的[jar包](http://ncu.dl.sourceforge.net/project/plantuml/plantuml.jar)。
+
+##1、下载一份plantuml的[jar包](http://ncu.dl.sourceforge.net/project/plantuml/plantuml.jar)。
 
 
 
@@ -75,15 +74,14 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 
 
 
- 
 
 
 
 
 
 
-## 
-2、为_**gollum-lib**_增加一个plantuml的filter
+
+##2、为_**gollum-lib**_增加一个plantuml的filter
 
 
 
@@ -105,26 +103,25 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 
 
 
-    
-    
+```ruby
     # ~*~ encoding: utf-8 ~*~
     require 'net/http'
     require 'uri'
     require 'open-uri'
     require File.expand_path '../../helpers', __FILE__
-    
+
     # PlantUML Diagrams
     #
     # Render an inline plantuml diagram by generating a PNG image using the
     # plantuml.jar tool.
     #
     class Gollum::Filter::PlantUML < Gollum::Filter
-    
+
       #path of plantuml.jar
       JAR = "/root/plantuml/plantuml.jar"
       #path of java
       JAVA= "java"
-    
+
       # Extract all sequence diagram blocks into the map and replace with
       # placeholders.
       def extract(data)
@@ -135,7 +132,7 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
           id
         end
       end
-    
+
       # Process all diagrams from the map and replace the placeholders with
       # the final HTML.
       #
@@ -149,9 +146,9 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
         end
         data
       end
-    
+
       private
-    
+
       def render_plantuml(id, code,filepath)
         out_path = ::File.join(filepath, id)
         unless File::exists?(filepath+"/"+id)
@@ -168,24 +165,23 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
         end
         "<img src=\"tmp/#{id}.png\" />"
       end
-    
+
     end
-    
+```
 
 
 
 
 
 
- 
 
 
 
 
 
 
-## 
-3、让wiki格式化内容时使用该filter
+
+##3、让wiki格式化内容时使用该filter
 
 
 
@@ -194,53 +190,11 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 
 
 修改_**$gems/gollum-lib-4.0.X/lib/gollum-lib/wiki.rb**_,为属性**_@filter_chain_**增加_**PlantUML**_对象，修改后的该属性为：
-
-
-
-
-
-
-
- 
-
-
-
-
-
-    
-    
-          @filter_chain         = options.fetch :filter_chain,
-                                                [:Metadata, :PlainText, :TOC, :RemoteCode, :Code, :Macro, :Sanitize, :WSD, :Tags,:PlantUML, :Render]
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
+```ruby
+@filter_chain         = options.fetch :filter_chain,[:Metadata, :PlainText, :TOC, :RemoteCode, :Code, :Macro, :Sanitize, :WSD, :Tags,:PlantUML, :Render]
+```
 OK，搞定。重启gollum，现在新建一个page，录入以下内容：
-
-
-
-
-
-    
-    
+```ruby
     @startuml
     digraph G {
         main -> parse -> execute;
@@ -252,8 +206,8 @@ OK，搞定。重启gollum，现在新建一个page，录入以下内容：
         main -> printf;
         execute -> compare;
     }
-    @enduml
-
+@enduml
+```
 
 
 
@@ -276,7 +230,3 @@ OK，搞定。重启gollum，现在新建一个page，录入以下内容：
 
 
 生成的流程图文件会存放在$wikidir/wiki/tmp下
-
-
-
-
