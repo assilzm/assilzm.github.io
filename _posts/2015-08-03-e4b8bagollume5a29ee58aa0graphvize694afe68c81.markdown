@@ -11,7 +11,7 @@ categories:
 ---
 
 
-	示例的gollum版本为4.0.0，操作系统为centos
+示例的gollum版本为4.0.0，操作系统为centos
 
 
 
@@ -19,7 +19,7 @@ categories:
 
 
 
-	gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通常在ruby安装目录下
+gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通常在ruby安装目录下
 
 
 
@@ -27,7 +27,7 @@ categories:
 
 
 
-	 
+ 
 
 
 
@@ -35,7 +35,7 @@ categories:
 
 
 ### 
-	1、先在机器上安装graphviz
+1、先在机器上安装graphviz
 
 
 
@@ -50,7 +50,7 @@ categories:
 
 
 
-	 
+ 
 
 
 
@@ -58,7 +58,7 @@ categories:
 
 
 
-	 
+ 
 
 
 
@@ -66,7 +66,7 @@ categories:
 
 
 ### 
-	2、修改_**$gems/gollum-4.0.0/bin/**_下的_**gollum**_执行文件，对_**opts**_对象增加_**dot**_参数支持，修改后的_**opts**_对象如下：
+2、修改_**$gems/gollum-4.0.0/bin/**_下的_**gollum**_执行文件，对_**opts**_对象增加_**dot**_参数支持，修改后的_**opts**_对象如下：
 
 
 
@@ -184,7 +184,7 @@ categories:
 
 
 
-	 
+ 
 
 
 
@@ -192,7 +192,7 @@ categories:
 
 
 
-	 
+ 
 
 
 
@@ -200,7 +200,7 @@ categories:
 
 
 ### 
-	3、修改**_$gems/gollum-4.0.0/lib/gollum/_**下的_**apps.rb**_，增加对graphviz生成的png文件支持。修改模块_**Precious**_下的_**App**_类，增加一个方法（在get %r方法后增加即可）：
+3、修改**_$gems/gollum-4.0.0/lib/gollum/_**下的_**apps.rb**_，增加对graphviz生成的png文件支持。修改模块_**Precious**_下的_**App**_类，增加一个方法（在get %r方法后增加即可）：
 
 
 
@@ -220,7 +220,7 @@ categories:
 
 
 
-	 
+ 
 
 
 
@@ -228,7 +228,7 @@ categories:
 
 
 
-	 
+ 
 
 
 
@@ -236,7 +236,7 @@ categories:
 
 
 ### 
-	4、为gollum的markup增加graphviz标签支持以及图形转换，修改**_$gem/gollum-lib-4.0.X/lib/gollum-lib/_**目录下的文件_**markup.rb**_，在class中增加一个函数**_process_graphviz_**：
+4、为gollum的markup增加graphviz标签支持以及图形转换，修改**_$gem/gollum-lib-4.0.X/lib/gollum-lib/_**目录下的文件_**markup.rb**_，在class中增加一个函数**_process_graphviz_**：
 
 
 
@@ -272,7 +272,7 @@ categories:
 
 
 
-	在render方法里的**_data = @data.dup_**后对代码的解析处理：**_data = process_graphviz(data) if @wiki.dot_**
+在render方法里的**_data = @data.dup_**后对代码的解析处理：**_data = process_graphviz(data) if @wiki.dot_**
 
 
 
@@ -309,7 +309,7 @@ categories:
 
 
 
-	 
+ 
 
 
 
@@ -317,7 +317,7 @@ categories:
 
 
 
-	 
+ 
 
 
 
@@ -325,7 +325,7 @@ categories:
 
 
 ### 
-	5、修改_**$gems/gollum-lib-4.0.X/lib/gollum-lib/**_下的_**wiki.rb**_，在**_initialize_**方法中增加一个对象**_@dot_**：
+5、修改_**$gems/gollum-lib-4.0.X/lib/gollum-lib/**_下的_**wiki.rb**_，在**_initialize_**方法中增加一个对象**_@dot_**：
 
 
 
@@ -340,7 +340,7 @@ categories:
 
 
 
-	增加一个Internal Methods的_**attr_reader**_
+增加一个Internal Methods的_**attr_reader**_
 
 
 
@@ -355,7 +355,7 @@ categories:
 
 
 
-	 
+ 
 
 
 
@@ -363,7 +363,7 @@ categories:
 
 
 
-	OK，搞定。启动gollum的时候使用dot参数启动即可。
+OK，搞定。启动gollum的时候使用dot参数启动即可。
 
 
 
@@ -378,7 +378,7 @@ categories:
 
 
 
-	现在在编辑wiki的时候使用<graphviz></graphviz>标签包起来graphviz代码即可在文章中显示graphviz流程图了。
+现在在编辑wiki的时候使用<graphviz></graphviz>标签包起来graphviz代码即可在文章中显示graphviz流程图了。
 
 
 
