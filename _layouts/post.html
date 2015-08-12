@@ -27,9 +27,9 @@ layout: default
             {% endfor %}
 
             <li class="fb">
-            <a target="_blank" title="Share on Facebook" href="https://www.facebook.com/sharer/sharer.php?t={{ page.title }}&u={{ url }}">Facebook</a></li>
+            <a target="_blank" title="github" href="https://{{page.title }}.github.io">github</a></li>
             <li class="tw"><a target="_blank" title="Share on Twitter" href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ url }}&via={{ site.twitter }}&hashtags={{ tagStr }}">Twitter</a></li>
-            <li class="gp"><a target="_blank" title="Share on Google+" href="https://plus.google.com/share?url={{ url }}">Google+</a></li>
+            <li class="ws"><a target="_blank" title="Share on Google+" href="https://{{ url }}">website</a></li>
         </ul>
     </div>
 
@@ -52,6 +52,3 @@ layout: default
 {% endif %}
 
 </div>
-
-
-
