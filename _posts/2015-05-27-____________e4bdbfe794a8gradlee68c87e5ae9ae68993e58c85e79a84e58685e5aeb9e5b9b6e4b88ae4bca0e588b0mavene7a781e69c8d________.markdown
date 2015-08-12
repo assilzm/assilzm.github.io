@@ -1,4 +1,15 @@
-
+---
+author: admin
+comments: true
+date: 2015-05-27 06:01:27+00:00
+layout: post
+slug: "\n            %e4%bd%bf%e7%94%a8gradle%e6%8c%87%e5%ae%9a%e6%89%93%e5%8c%85%e7%9a%84%e5%86%85%e5%ae%b9%e5%b9%b6%e4%b8%8a%e4%bc%a0%e5%88%b0maven%e7%a7%81%e6%9c%8d\n\
+  \        "
+title: 使用gradle指定打包的内容并上传到maven私服
+wordpress_id: 200
+categories:
+- Gradle
+---
 
 ```groovy
     artifacts {
