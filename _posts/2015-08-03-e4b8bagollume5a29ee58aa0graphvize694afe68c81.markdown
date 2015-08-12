@@ -209,6 +209,7 @@ end```
 ```
 
 增加一个Internal Methods的_**attr_reader**_
+
 ```ruby
 attr_reader :dot
 ```

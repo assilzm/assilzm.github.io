@@ -95,6 +95,7 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 ```
 
 ##3、让wiki格式化内容时使用该filter
+
 修改_**$gems/gollum-lib-4.0.X/lib/gollum-lib/wiki.rb**_,为属性**_@filter_chain_**增加_**PlantUML**_对象，修改后的该属性为：
 
 ```ruby
@@ -104,7 +105,7 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 OK，搞定。重启gollum，现在新建一个page，录入以下内容：
 
 ```
-    @startuml
+@startuml
     digraph G {
         main -> parse -> execute;
         main -> init;
