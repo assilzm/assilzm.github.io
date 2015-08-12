@@ -1,14 +1,4 @@
----
-author: admin
-comments: true
-date: 2015-08-04 09:59:38+00:00
-layout: post
-slug: '%e4%b8%bagollum%e5%a2%9e%e5%8a%a0plantuml%e6%94%af%e6%8c%81-2'
-title: 为gollum增加plantuml支持
-wordpress_id: 212
-categories:
-- 未分类
----
+
 
 
 之前为gollum增加了graphviz支持，后来考虑了下其实plantuml支持的流程格式更多，并且完全兼容graphviz。因此顺便也把plantuml的支持增加上了。

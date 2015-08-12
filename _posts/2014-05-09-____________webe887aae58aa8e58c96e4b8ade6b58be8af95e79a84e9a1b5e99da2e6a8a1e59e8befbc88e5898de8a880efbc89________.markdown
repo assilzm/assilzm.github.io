@@ -1,16 +1,4 @@
----
-author: admin
-comments: true
-date: 2014-05-09 14:54:14+00:00
-layout: post
-slug: "\n            web%e8%87%aa%e5%8a%a8%e5%8c%96%e4%b8%ad%e6%b5%8b%e8%af%95%e7%9a%84%e9%a1%b5%e9%9d%a2%e6%a8%a1%e5%9e%8b%ef%bc%88%e5%89%8d%e8%a8%80%ef%bc%89\n\
-  \        "
-title: WEB自动化测试中的页面模型（前言）
-wordpress_id: 73
-categories:
-- Selenium WebDriver
-- 自动化
----
+
 
 
 以下是废话，不想看的直接进入正题：《[WEB自动化测试中的页面模型（一） 工程结构及登陆页面](http://www.assilzm.com/?p=78)》

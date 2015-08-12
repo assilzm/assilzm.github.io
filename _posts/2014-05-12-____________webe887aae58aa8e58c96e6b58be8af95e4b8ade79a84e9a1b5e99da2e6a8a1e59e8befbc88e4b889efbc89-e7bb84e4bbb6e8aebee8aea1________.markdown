@@ -1,16 +1,4 @@
----
-author: admin
-comments: true
-date: 2014-05-12 05:31:35+00:00
-layout: post
-slug: "\n            web%e8%87%aa%e5%8a%a8%e5%8c%96%e6%b5%8b%e8%af%95%e4%b8%ad%e7%9a%84%e9%a1%b5%e9%9d%a2%e6%a8%a1%e5%9e%8b%ef%bc%88%e4%b8%89%ef%bc%89-%e7%bb%84%e4%bb%b6%e8%ae%be%e8%ae%a1\n\
-  \        "
-title: WEB自动化测试中的页面模型（三）–组件设计（列表组件）
-wordpress_id: 129
-categories:
-- Selenium WebDriver
-- 自动化
----
+
 
 
 上一章中，我们在首页页面中调用了一些组件。简单的来说，组件也可以看做一块小的页面，因此，它也会有自己的属性、方法，甚至组件里也能有组件。

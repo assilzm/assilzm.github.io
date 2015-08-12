@@ -1,16 +1,4 @@
----
-author: admin
-comments: true
-date: 2014-05-10 05:49:34+00:00
-layout: post
-slug: "\n            web%e8%87%aa%e5%8a%a8%e5%8c%96%e6%b5%8b%e8%af%95%e4%b8%ad%e7%9a%84%e9%a1%b5%e9%9d%a2%e6%a8%a1%e5%9e%8b%ef%bc%88%e4%ba%8c%ef%bc%89-%e9%82%ae%e4%bb%b6%e9%a1%b5%e9%9d%a2%e7%bb%93%e6%9e%84\n\
-  \        "
-title: WEB自动化测试中的页面模型（二）–邮件页面结构分析
-wordpress_id: 113
-categories:
-- Selenium WebDriver
-- 自动化
----
+
 
 
 登陆页是一个很简单的单一页面，但是进入到邮件页面后，我们就会遇到很多的页面了，如何组织、设计这些页面会相对复杂一些。
