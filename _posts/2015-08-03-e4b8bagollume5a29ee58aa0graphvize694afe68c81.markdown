@@ -205,7 +205,8 @@ end```
 ###5、修改_**$gems/gollum-lib-4.0.X/lib/gollum-lib/**_下的_**wiki.rb**_，在**_initialize_**方法中增加一个对象**_@dot_**：
 
 ```ruby
-    @dot = options.fetch :dot, false```
+    @dot = options.fetch :dot, false
+```
 
 增加一个Internal Methods的_**attr_reader**_
 ```ruby

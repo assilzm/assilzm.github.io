@@ -13,95 +13,20 @@ categories:
 
 之前为gollum增加了graphviz支持，后来考虑了下其实plantuml支持的流程格式更多，并且完全兼容graphviz。因此顺便也把plantuml的支持增加上了。
 
-
-
-
-
-
-
 做完后发现其实增加plantuml的支持更简单些。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 示例的gollum版本为4.0.0，操作系统为centos
 
-
-
-
-
-
-
 gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通常在ruby安装目录下。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ##1、下载一份plantuml的[jar包](http://ncu.dl.sourceforge.net/project/plantuml/plantuml.jar)。
-
-
-
-
-
-
-
-可能需要翻墙。下载完成后放到一个目录下。如：/root/plantuml/plantuml.jar。
-
-
-
-
-
-
-
-
-
-
-
-
-
+*可能需要翻墙。下载完成后放到一个目录下*。如：/root/plantuml/plantuml.jar。
 
 ##2、为_**gollum-lib**_增加一个plantuml的filter
 
-
-
-
-
-
-
 新建文件：_**$gems/gollum-lib-4.0.X/lib/gollum-lib/filter/plantuml.rb**_
 
-
-
-
-
-
-
 内容如下：
-
-
-
-
 
 ```ruby
     # ~*~ encoding: utf-8 ~*~
@@ -169,32 +94,16 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
     end
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
 ##3、让wiki格式化内容时使用该filter
-
-
-
-
-
-
-
 修改_**$gems/gollum-lib-4.0.X/lib/gollum-lib/wiki.rb**_,为属性**_@filter_chain_**增加_**PlantUML**_对象，修改后的该属性为：
+
 ```ruby
 @filter_chain         = options.fetch :filter_chain,[:Metadata, :PlainText, :TOC, :RemoteCode, :Code, :Macro, :Sanitize, :WSD, :Tags,:PlantUML, :Render]
 ```
+
 OK，搞定。重启gollum，现在新建一个page，录入以下内容：
-```ruby
+
+```
     @startuml
     digraph G {
         main -> parse -> execute;
@@ -209,24 +118,8 @@ OK，搞定。重启gollum，现在新建一个page，录入以下内容：
 @enduml
 ```
 
-
-
-
-
 预览或保存，就可以看到流程图了。
 
-
-
-
-
-
-
 ![](http://www.assilzm.com/wp-content/uploads/2015/08/20150804175632.jpg)
-
-
-
-
-
-
 
 生成的流程图文件会存放在$wikidir/wiki/tmp下
