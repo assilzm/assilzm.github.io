@@ -13,45 +13,15 @@ categories:
 
 示例的gollum版本为4.0.0，操作系统为centos
 
-
-
-
-
-
-
 gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通常在ruby安装目录下
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### 1、先在机器上安装graphviz
-
-
-
-
-
-
 
 ```
     yum install 'graphviz*'
 ```
 
 ### 2、修改_**$gems/gollum-4.0.0/bin/**_下的_**gollum**_执行文件，对_**opts**_对象增加_**dot**_参数支持，修改后的_**opts**_对象如下：
-
-
-
-
-
 
 ```ruby
     opts = OptionParser.new do |opts|
@@ -163,18 +133,14 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 
 ###3、修改**_$gems/gollum-4.0.0/lib/gollum/_**下的_**apps.rb**_，增加对graphviz生成的png文件支持。修改模块_**Precious**_下的_**App**_类，增加一个方法（在get %r方法后增加即可）：
 
-
-
-
-
-
 ```ruby
 # graphviz image
 get %r{tmp/([0-9a-f]{40})\.png} do
   file = ::File.open ::File.expand_path ::File.join wiki_new.path, "tmp/#{params[:captures][0]}.png"
   # Use Sinatra's send_file because the pngs are not in git.
   send_file file, :type => 'image/png'
-end```
+end
+```
 
 ###4、为gollum的markup增加graphviz标签支持以及图形转换，修改**_$gem/gollum-lib-4.0.X/lib/gollum-lib/_**目录下的文件_**markup.rb**_，在class中增加一个函数**_process_graphviz_**：
 
@@ -206,19 +172,10 @@ def process_graphviz(data)
     # Replace graph with img link
     %Q(<img alt="Graphviz image" src="/tmp/#{id}.png">)
   end
-end```
-
-
-
-
-
+end
+```
 
 在render方法里的**_data = @data.dup_**后对代码的解析处理：**_data = process_graphviz(data) if @wiki.dot_**
-
-
-
-
-
 
 ```ruby
 def render(no_follow = false, encoding = nil, include_levels = 10)
@@ -244,9 +201,12 @@ def render(no_follow = false, encoding = nil, include_levels = 10)
 
   process_chain data, filter_chain
 end```
+
 ###5、修改_**$gems/gollum-lib-4.0.X/lib/gollum-lib/**_下的_**wiki.rb**_，在**_initialize_**方法中增加一个对象**_@dot_**：
+
 ```ruby
     @dot = options.fetch :dot, false```
+
 增加一个Internal Methods的_**attr_reader**_
 ```ruby
 attr_reader :dot
