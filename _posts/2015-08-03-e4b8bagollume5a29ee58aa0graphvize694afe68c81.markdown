@@ -1,4 +1,14 @@
-
+---
+author: admin
+comments: true
+date: 2015-08-03 09:30:56+00:00
+layout: post
+slug: '%e4%b8%bagollum%e5%a2%9e%e5%8a%a0graphviz%e6%94%af%e6%8c%81'
+title: 为gollum增加graphviz支持
+wordpress_id: 203
+categories:
+- 未分类
+---
 
 
 示例的gollum版本为4.0.0，操作系统为centos

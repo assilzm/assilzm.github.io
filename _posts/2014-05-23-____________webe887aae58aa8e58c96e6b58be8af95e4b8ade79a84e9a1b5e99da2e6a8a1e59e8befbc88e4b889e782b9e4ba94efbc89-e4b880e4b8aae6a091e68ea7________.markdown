@@ -1,4 +1,16 @@
-
+---
+author: admin
+comments: true
+date: 2014-05-23 09:24:22+00:00
+layout: post
+slug: "\n            web%e8%87%aa%e5%8a%a8%e5%8c%96%e6%b5%8b%e8%af%95%e4%b8%ad%e7%9a%84%e9%a1%b5%e9%9d%a2%e6%a8%a1%e5%9e%8b%ef%bc%88%e4%b8%89%e7%82%b9%e4%ba%94%ef%bc%89-%e4%b8%80%e4%b8%aa%e6%a0%91%e6%8e%a7\n\
+  \        "
+title: WEB自动化测试中的页面模型（三点五）–树组件设计
+wordpress_id: 138
+categories:
+- Selenium WebDriver
+- 自动化
+---
 
 
 上一章中，我们有简单的介绍下一个列表组件该怎么设计，给出了我简单的设计思路。

@@ -1,4 +1,14 @@
-
+---
+author: admin
+comments: true
+date: 2015-04-01 12:44:33+00:00
+layout: post
+slug: '%e4%bd%bf%e7%94%a8gradle%e6%89%93%e5%8c%85jar'
+title: 使用Gradle打包jar
+wordpress_id: 192
+categories:
+- Gradle
+---
 
 
     task releaseJar(type: Jar) {
