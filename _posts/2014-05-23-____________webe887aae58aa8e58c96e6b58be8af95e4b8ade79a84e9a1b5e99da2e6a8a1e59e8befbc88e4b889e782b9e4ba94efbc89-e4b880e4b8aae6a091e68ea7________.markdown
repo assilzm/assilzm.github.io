@@ -6,473 +6,190 @@ layout: post
 slug: "\n            web%e8%87%aa%e5%8a%a8%e5%8c%96%e6%b5%8b%e8%af%95%e4%b8%ad%e7%9a%84%e9%a1%b5%e9%9d%a2%e6%a8%a1%e5%9e%8b%ef%bc%88%e4%b8%89%e7%82%b9%e4%ba%94%ef%bc%89-%e4%b8%80%e4%b8%aa%e6%a0%91%e6%8e%a7\n\
   \        "
 title: WEB自动化测试中的页面模型（三点五）–树组件设计
-wordpress_id: 138
+wordpressid: 138
 categories:
 - Selenium WebDriver
 - 自动化
 ---
-
-
 上一章中，我们有简单的介绍下一个列表组件该怎么设计，给出了我简单的设计思路。
-
-
-
-
-
-
-
 本来这一章准备写点复杂的页面设计的，但是看平时很多人对树结构很头疼，因此在本章中，我以一个比较完整的树结构的设计设计对上一章进行一点补充。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-本次我们要设计一个简单的树，随便找了个例子：[http://www.ztree.me/v3/demo.php#_102](http://www.ztree.me/v3/demo.php#_102)如图：
-
-
-
-
-
-
+本次我们要设计一个简单的树，随便找了个例子：[http://www.ztree.me/v3/demo.php#102](http://www.ztree.me/v3/demo.php#102)如图：
 
 [![tree](http://www.assilzm.com/wp-content/uploads/2014/05/tree.jpg)](http://www.assilzm.com/wp-content/uploads/2014/05/tree.jpg)
 
-
-
-
-
-
-
 这棵树具备以下特征：
-
-
-
-
-
-
-
-_1、树可以有多个根节点_
-
-
-
-
-
-
-
-_2、树需要通过节点前方的+或-开关打开关闭子节点_
-
-
-
-
-
-
-
-_3、展开节点后父节点不会消失。_
-
-
-
-
-
-
-
-_4、子节点在父节点的子元素中。_
-
-
-
-
-
-
-
+ 1. 树可以有多个根节点
+ 2. 树需要通过节点前方的+或-开关打开关闭子节点
+ 3. 展开节点后父节点不会消失。
+ 4. 子节点在父节点的子元素中。
 树可能会有很多的变种，这里我们仅以符合上面特征的树作为例子，有其他特殊需求的同学请自行扩展。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 观察这个树结构，我们发现我们可能需要用到的一些属性，以方便以后如果要支持其他树结构可以进行简单的修改支持，这里我们仅以例子中的结构为例，把这些特征设计为属性，它们如下：
-
-
-
-
-
-
-
-_1、树的特征，或者说是树所在页面中的容器选择器特征_
-
-
-
-
-
-
-
-_2、根节点的选择器_
-
-
-
-
-
-
-
-_3、父节点展开后子节点所在的容器_
-
-
-
-
-
-
-
-_4、节点在树结构中的元素（如该例子中是一个li下的a元素，只有该元素接受点击事件）_
-
-
-
-
-
-
-
-_5、开关的选择器特征，以及打开、关闭状态的选择器特征_
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 1. 树的特征，或者说是树所在页面中的容器选择器特征
+ 2. 根节点的选择器
+ 3. 父节点展开后子节点所在的容器
+ 4. 节点在树结构中的元素（如该例子中是一个li下的a元素，只有该元素接受点击事件）
+ 5. 开关的选择器特征，以及打开、关闭状态的选择器特征
 好了，特征大概就是这些，我们根据这些特征，先设计好树控件的属性：
 
+```java
+private final static Logger logger = LogUtils.getLogger(Tree)
 
+/**
+ * tree container tag name
+ */
+final static String CONTAINERTAGNAME = 'div'
 
+/**
+ * tree container attribute name
+ */
+final static String CONTAINERATTRIBUTENAME = "class"
 
+/**
+ * tree container attribute value
+ */
+final static String CONTAINERATTRIBUTEVALUE = "zTreeDemoBackground"
 
+/**
+ * switcher selector
+ */
+final static String SWITCHERSELECTOR = "span[starts-with(@class,'ico')]"
 
+/**
+ * switcher attribute to verify
+ */
+final static String SWITCHERATTRIBUTENAME = "class"
 
-        private final static Logger logger = LogUtils.getLogger(Tree)
+/**
+ * tree node switcher closed class
+ */
+final static String SWITCHERCLOSEDATTRIBUTEVALUE = "icoclose"
 
-        /**
-         * tree container tag name
-         */
-        final static String CONTAINER_TAG_NAME = 'div'
+/**
+ * tree node switcher opened class
+ */
+final static String SWITCHEROPENEDATTRIBUTEVALUE = "icoopen"
 
-        /**
-         * tree container attribute name
-         */
-        final static String CONTAINER_ATTRIBUTE_NAME = "class"
+/**
+ * root node selector
+ */
+final static String ROOTNODESELECTOR = "ul[@class='ztree']/li[@class='level0']"
 
-        /**
-         * tree container attribute value
-         */
-        final static String CONTAINER_ATTRIBUTE_VALUE = "zTreeDemoBackground"
+/**
+ * node element tag name
+ */
+final static String NODESELECTOR = "a"
 
-        /**
-         * switcher selector
-         */
-        final static String SWITCHER_SELECTOR = "span[starts-with(@class,'ico_')]"
+/**
+ * sub node container selector
+ */
+final static String SUBNODECONTAINERSELECTOR = "ul/li"
 
-        /**
-         * switcher attribute to verify
-         */
-        final static String SWITCHER_ATTRIBUTE_NAME = "class"
+/**
+ * container selector
+ */
+String containerSelector = null
 
-        /**
-         * tree node switcher closed class
-         */
-        final static String SWITCHER_CLOSED_ATTRIBUTE_VALUE = "ico_close"
+/**
+ * current tree container selector with default value
+ */
+Tree() {
+    containerSelector = "//$CONTAINERTAGNAME[@$CONTAINERATTRIBUTENAME='$CONTAINERATTRIBUTEVALUE']"
+}
 
-        /**
-         * tree node switcher opened class
-         */
-        final static String SWITCHER_OPENED_ATTRIBUTE_VALUE = "ico_open"
-
-        /**
-         * root node selector
-         */
-        final static String ROOT_NODE_SELECTOR = "ul[@class='ztree']/li[@class='level0']"
-
-        /**
-         * node element tag name
-         */
-        final static String NODE_SELECTOR = "a"
-
-        /**
-         * sub node container selector
-         */
-        final static String SUB_NODE_CONTAINER_SELECTOR = "ul/li"
-
-        /**
-         * container selector
-         */
-        String containerSelector = null
-
-        /**
-         * current tree container selector with default value
-         */
-        Tree() {
-            containerSelector = "//$CONTAINER_TAG_NAME[@$CONTAINER_ATTRIBUTE_NAME='$CONTAINER_ATTRIBUTE_VALUE']"
-        }
-
-        /**
-         * current grid container selector with custom value
-         * @param selector
-         */
-        Tree(String selector) {
-            containerSelector = selector
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/**
+ * current grid container selector with custom value
+ * @param selector
+ */
+Tree(String selector) {
+    containerSelector = selector
+}
+        ```
 有了这些属性，我们设计一下取得一个节点的选择器的方法,假设我们要找到一个节点，必须知道这个节点所经过的路径，比如：[根节点(父节点1)->父节点2->父节点3->父节点4->父节点5->所需要找的节点]，我们把这个节点序列设计成一个List。可能所需要操作的步骤如下：
 
+ 1. 找到第一个父节点(也就是根节点）
+ 2. 如果父节点有子节点（节点左边的开关控件显示+），那么展开它
+ 3. 找到第二个父节点
+ 4. 如果父节点有子节点（节点左边的开关控件显示+），那么展开它
 
+  ....重复1和2...
 
-
-
-
-
-1、找到第一个父节点(也就是根节点）
-
-
-
-
-
-
-
-2、如果父节点有子节点（节点左边的开关控件显示+），那么展开它
-
-
-
-
-
-
-
-3、找到第二个父节点
-
-
-
-
-
-
-
-4、如果父节点有子节点（节点左边的开关控件显示+），那么展开它
-
-
-
-
-
-
-
-....重复1和2...
-
-
-
-
-
-
-
-n、直到节点序列最后一个元素找到，返回该节点的选择器
-
-
-
-
-
-
+    直到节点序列最后一个元素找到，返回该节点的选择器
 
 我们设计一个getNodeSelector方法，传入一个为List<String>的节点路径参树，生成选择器。这个方法可能用到其他两个方法:根据提供的显示文本返回某个子节点选择器的方法getSubNodeSelector、展开某个节点的方法unfoldNode
-
-
-
-
-
-
-
 getNodeSelector：
-
-
-
-
-
-
-
-        /**
-         * get node selector with node path list
-         * @param pathList node path,eg:[rootNodeText,firstNodeText,secondNodeText]
-         * @return the selector of node path
-         */
-        String getNodeSelector(List<String> pathList) {
-            int pathSize=pathList.size()
-            assertTrue("node path can not be empty", pathSize > 0)
-            String nodeSelector = containerSelector
-            for (int i=0;i< pathSize;i++) {
-                if (i!=pathSize-1&&!unfoldNode(nodeSelector))
-                    return null
-                nodeSelector = getSubNodeSelector("$nodeSelector/$SUB_NODE_CONTAINER_SELECTOR", pathList.get(i))
-            }
-            logger.debug("create node selector:$nodeSelector")
-            return "$nodeSelector/$NODE_SELECTOR"
-        }
-
-
-
-
-
-
+```java
+/**
+ * get node selector with node path list
+ * @param pathList node path,eg:[rootNodeText,firstNodeText,secondNodeText]
+ * @return the selector of node path
+ */
+String getNodeSelector(List<String> pathList) {
+    int pathSize=pathList.size()
+    assertTrue("node path can not be empty", pathSize > 0)
+    String nodeSelector = containerSelector
+    for (int i=0;i< pathSize;i++) {
+        if (i!=pathSize-1&&!unfoldNode(nodeSelector))
+            return null
+        nodeSelector = getSubNodeSelector("$nodeSelector/$SUB_NODE_CONTAINER_SELECTOR", pathList.get(i))
+    }
+    logger.debug("create node selector:$nodeSelector")
+    return "$nodeSelector/$NODE_SELECTOR"
+}
+        ```
 getSubNodeSelector：
-
-
-
-
-
-
-
-        /**
-         * get a sub node selector with displayed text of a node selector
-         * @param nodeSelector father node selector
-         * @param subNodeText  displayed text of sub node
-         * @return sub node selector
-         */
-        private String getSubNodeSelector(String nodeSelector, String subNodeText) {
-            List<String> subNodeNames = getTexts(nodeSelector)
-            logger.debug("sub node texts:$subNodeNames")
-            int nodeIndex = subNodeNames.indexOf(subNodeText)
-            if (nodeIndex == -1)
-                return null
-            return nodeSelector + "[$nodeIndex]"
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```java
+/**
+ * get a sub node selector with displayed text of a node selector
+ * @param nodeSelector father node selector
+ * @param subNodeText  displayed text of sub node
+ * @return sub node selector
+ */
+private String getSubNodeSelector(String nodeSelector, String subNodeText) {
+    List<String> subNodeNames = getTexts(nodeSelector)
+    logger.debug("sub node texts:$subNodeNames")
+    int nodeIndex = subNodeNames.indexOf(subNodeText)
+    if (nodeIndex == -1)
+        return null
+    return nodeSelector + "[$nodeIndex]"
+}
+        ```
 unfoldNode：
-
-
-
-
-
-
-
-        /**
-         * unfold a father node
-         * @param nodeSelector father node selector
-         * @return if it is unfolded
-         */
-        boolean unfoldNode(String nodeSelector) {
-            boolean hasSubNodes = false
-            WebElement switcher = findElement("$nodeSelector/$SWITCHER_SELECTOR")
-            if (switcher.getAttribute(SWITCHER_ATTRIBUTE_NAME).contains(SWITCHER_CLOSED_ATTRIBUTE_VALUE)) {
-                logger.debug("unfold node:$nodeSelector")
-                switcher.click()
-                hasSubNodes = true
-            }
-            return hasSubNodes
-        }
-
-
-
-
-
-
+```java
+/**
+ * unfold a father node
+ * @param nodeSelector father node selector
+ * @return if it is unfolded
+ */
+boolean unfoldNode(String nodeSelector) {
+    boolean hasSubNodes = false
+    WebElement switcher = findElement("$nodeSelector/$SWITCHER_SELECTOR")
+    if (switcher.getAttribute(SWITCHER_ATTRIBUTE_NAME).contains(SWITCHER_CLOSED_ATTRIBUTE_VALUE)) {
+        logger.debug("unfold node:$nodeSelector")
+        switcher.click()
+        hasSubNodes = true
+    }
+    return hasSubNodes
+}
+        ```
 好了，现在我们可以取得任意的一个节点的选择器了。如果我们要点击一个节点，可以很简单的完成：
-
-
-
-
-
-
-
-        /**
-         * click at a node
-         * @param pathList node path,eg:[rootNodeText,firstNodeText,secondNodeText]
-         */
-        void clickNode(List<String> pathList){
-            String nodeSelector=getNodeSelector(pathList)
-            assertNotNull("assert node selector of $pathList is exist",nodeSelector)
-            click(nodeSelector)
-        }
-
-
-
-
-
-
+```java
+/**
+ * click at a node
+ * @param pathList node path,eg:[rootNodeText,firstNodeText,secondNodeText]
+ */
+void clickNode(List<String> pathList){
+    String nodeSelector=getNodeSelector(pathList)
+    assertNotNull("assert node selector of $pathList is exist",nodeSelector)
+    click(nodeSelector)
+}
+        ```
 接下来只要扩展方法，完全可以实现所有的其他操作。大家自行扩展即可，该代码也可以在示例工程中找到。
-
-
-
-
-
-
-
-_PS:细心的同学可以可以发现，我们定义的根节点根本没有用上。其实如果该页面中只有一棵树，我们完全可以不管树所在的容器，直接使用根节点的ztree这个class来完成定位，至于怎么修改一下该控件结构来达到这个目的.同样，有的地方对于异常数据的验证也不完整，就交给大家自己解决啦~_
-
-
-
-
-
-
-
+PS:细心的同学可以可以发现，我们定义的根节点根本没有用上。其实如果该页面中只有一棵树，我们完全可以不管树所在的容器，直接使用根节点的ztree这个class来完成定位，至于怎么修改一下该控件结构来达到这个目的.同样，有的地方对于异常数据的验证也不完整，就交给大家自己解决啦~
 配合上前面几张所讲的页面控件的调用方法，我们要点击"叶子节点122",就可以如下操作啦：
-
-
-
-
-
-
-
-            Tree tree=new Tree()
-            String nodePath="父节点1->父节点12->叶子节点122";
-            List<String> nodeList= Arrays.asList(nodePath.split("->"))
-            tree.clickNode(nodeList)
-
-
-
-
-
-
+```java
+Tree tree=new Tree()
+String nodePath="父节点1->父节点12->叶子节点122";
+List<String> nodeList= Arrays.asList(nodePath.split("->"))
+tree.clickNode(nodeList)
+            ```
 补充就到这里，复杂页面的设计我有空了会更新。

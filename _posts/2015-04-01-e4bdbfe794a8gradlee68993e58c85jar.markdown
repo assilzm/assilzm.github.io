@@ -10,7 +10,7 @@ categories:
 - Gradle
 ---
 在build.gradle中新增任务releaseJar，类型为jar
-```groovy
+```java
 task releaseJar(type: Jar) {
   //设置manifest.mf的属性
   manifest {
