@@ -4,12 +4,12 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+*一个替代逝去的WordPress的新垃圾桶。*
 
-### More Information
+### 不用在意
 
-A place to include any other types of information that you'd like to include about yourself.
+这里其实没啥有用的东西，等以后牛逼了再写点别的。
 
-### Contact me
+### 如果你真的要联系我
 
-[email@domain.com](mailto:email@domain.com)
+mailto：[assilzm@gmail.com](mailto:assilzm@gmail.com)
