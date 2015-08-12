@@ -1,0 +1,373 @@
+---
+author: admin
+comments: true
+date: 2014-12-05 03:17:15+00:00
+layout: post
+slug: "\n            web%e8%87%aa%e5%8a%a8%e5%8c%96%e6%b5%8b%e8%af%95%e4%b8%ad%e7%9a%84%e9%a1%b5%e9%9d%a2%e6%a8%a1%e5%9e%8b%ef%bc%88%e5%9b%9b%ef%bc%89-%e9%a1%b5%e9%9d%a2%e6%a8%a1%e5%9e%8b%e7%ae%a1%e7%90%86\n\
+  \        "
+title: Web自动化测试中的页面模型（四）-页面模型管理
+wordpress_id: 186
+categories:
+- 自动化
+---
+
+
+	在Web自动化测试中，如果使用页面模型，页面类一多，就不可避免的会遇到页面模型的管理问题。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	如果还需要配合cucumber之类的BDD工具，我们还需要一个页面工厂来管理页面类与实际名称的对应关系。
+
+
+
+
+
+
+
+	通常这样的页面类可能会有一个对应关系的列表：
+
+
+
+
+
+    
+    
+    
+        static Map<String, Class> BUILTIN_PAGES = new HashMap<String, Class>(){
+            {
+                put("Login Page", LoginPage.class)
+                put("Home Page", MainPage.class)
+                put("System Page", SystemSetting.class)
+            }
+        }
+
+
+
+
+
+
+	  
+
+	当然也可能是其他形式，这里先以Map形式来说明，配合这个map，可能会有一个方法来创建一个具体的页面：
+
+
+
+
+
+    
+    
+    
+        static Object createPage(pageName){
+            return BUILTIN_PAGES.get(pageName).newInstance()
+        }
+
+
+
+
+
+
+	  
+
+	那么，问题就来了，随着页面的增多，Map对象会越来越来管理，特别是如果某些特殊的情况下类名或者包名还可能会重复，将来维护起来也会很困难。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	这里提供一个使用注解的页面管理方法来代替简单工厂，将来的维护关注点也能直接关注到页面类。
+
+
+
+
+
+
+
+	这里有一个简单的工程结构：
+
+
+
+
+
+
+
+	![](http://img.blog.csdn.net/20141119152431349)
+
+
+
+
+
+
+
+	pages包里包含了页面相关的内容。我们简单的设计下Page这个注解
+
+
+
+
+
+    
+    
+    <font color="#bbb529">@Documented
+    </font><font color="#bbb529">@Target</font>(ElementType.<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">TYPE</font>)
+    <font color="#bbb529">@Retention</font>(RetentionPolicy.<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">RUNTIME</font>)
+    <font color="#bbb529">@Inherited
+    </font><font color="#cc7832">public </font>@<font color="#cc7832">interface </font><font color="#bbb529">Page </font>{
+    
+        <font color="#629755" style=" font-style:italic">/**
+    </font><font color="#629755" style=" font-style:italic">     * page's name
+    </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
+    </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
+    </font><font color="#629755" style=" font-style:italic">    </font>String pageName()
+    
+        <font color="#629755" style=" font-style:italic">/**
+    </font><font color="#629755" style=" font-style:italic">     * page's type,default is USER_PAGE
+    </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
+    </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
+    </font><font color="#629755" style=" font-style:italic">    </font>PageType pageType() <font color="#cc7832">default </font>PageType.<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">USER_PAGE
+    </font>}
+
+
+
+
+
+
+	其中，pageName方法用于设置当前类对应的名称，pageType方法用于设置页面的类型，该类型是一个虚构的枚举，我们假设默认的页面为普通用户页面。这个方法可有可无，看实际需要。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	有了注解，我们就可以把注解给具体的页面打上了，打上后的页面类可能是这样的
+
+
+
+
+
+
+
+	普通人员页面：
+
+
+
+
+
+    
+    
+    <font color="#bbb529">@Page</font>(pageName = <font color="#6a8759">"user page 1"</font>)
+    <font color="#cc7832">class </font>Page1 <font color="#cc7832">extends </font>AbstractPage{
+    
+        Page1(){
+            <font color="#9876aa">menuPath</font>=<font color="#6a8759">"a->b->c"
+    </font><font color="#6a8759">        </font><font color="#9876aa">tabName</font>=<font color="#6a8759">"page1 tab"
+    </font><font color="#6a8759">    </font>}
+    }
+
+
+
+
+
+
+	管理员页面：
+
+
+
+
+
+    
+    
+    <font color="#bbb529">@Page</font>(pageName = <font color="#6a8759">"group admin page"</font>,pageType = PageType.<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">GROUP_ADMIN_PAGE</font>)
+    <font color="#cc7832">class </font>GroupAdminPage <font color="#cc7832">extends </font>AbstractPage{
+        GroupAdminPage(){
+            <font color="#9876aa">menuPath</font>=<font color="#6a8759">"d->e"
+    </font><font color="#6a8759">        </font><font color="#9876aa">tabName</font>=<font color="#cc7832">null
+    </font><font color="#cc7832">    </font>}
+    }
+    
+
+
+
+
+
+
+	以上2个页面类我虚构了一个抽象父类AbstractPage，里面定义了2个虚构的在当前系统所有页面都会有的属性：一个是进入页面的菜单路径menuPath,一个是页面可能存在的具体页签名称tabName。同样这两个属性是可有可无的。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	现在我们的所有页面都有了自己对应的页面名称，现在我们修改下简单页面工厂，来自动获取指定包下所有带Page注解的类生产对应关系
+
+
+
+
+
+    
+    
+    <font color="#cc7832">class </font>PageFactory {
+    
+        <font color="#808080">//logger
+    </font><font color="#808080">    </font><font color="#cc7832">private final static </font>Logger <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">logger </font>= LogUtils.<font color="#9876aa" style=" font-style:italic">getLogger</font>(PageFactory)
+    
+        <font color="#808080">//package contains all pages
+    </font><font color="#808080">    </font><font color="#cc7832">final static </font>String <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">PACKAGE_NAME </font>= <font color="#6a8759">"pages.production"
+    </font><font color="#6a8759">    
+    </font><font color="#6a8759">    </font><font color="#cc7832">static private </font>Map<String, Class> <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages </font>= <font color="#cc7832">new </font>HashMap<>()
+    
+        <font color="#629755" style=" font-style:italic">/**
+    </font><font color="#629755" style=" font-style:italic">     * get all pages
+    </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
+    </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
+    </font><font color="#629755" style=" font-style:italic">    </font><font color="#cc7832">static </font>Map<String, Class> <font color="#9876aa" style=" font-style:italic">getPages</font>() {
+            <font color="#cc7832">if </font>(<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages</font>.<font color="#9876aa">isEmpty</font>())
+                <font color="#9876aa" style=" font-style:italic">init</font>()
+            <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages
+    </font><font color="#d0d0ff" style=" font-weight:bold; font-style:italic">    </font>}
+    
+        <font color="#629755" style=" font-style:italic">/**
+    </font><font color="#629755" style=" font-style:italic">     * get a page by page name
+    </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@param </font><font color="#629755" style=" font-style:italic">pageName name of a page
+    </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return 
+    </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
+    </font><font color="#629755" style=" font-style:italic">    </font><font color="#cc7832">static </font>Class get(String pageName) {
+           <font color="#cc7832">def </font>pageClass= <font color="#9876aa" style=" font-style:italic">getPages</font>().get(pageName)
+            <font color="#cc7832">if</font>(!pageClass){
+                <font color="#cc7832">throw new </font>ClassNotFoundException(<font color="#6a8759">"can not find page [</font>${pageName}<font color="#6a8759">]"</font>)
+            }
+            pageClass
+        }
+    
+        <font color="#629755" style=" font-style:italic">/**
+    </font><font color="#629755" style=" font-style:italic">     * get a page instance
+    </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@param </font><font color="#629755" style=" font-style:italic">pageName name of a page
+    </font><font color="#629755" style=" font-style:italic">     * </font><font color="#7cb36f" style=" font-style:italic">@return
+    </font><font color="#7cb36f" style=" font-style:italic">     </font><font color="#629755" style=" font-style:italic">*/
+    </font><font color="#629755" style=" font-style:italic">    </font><font color="#cc7832">static </font>AbstractPage createPage(String pageName) {
+            <font color="#cc7832">def </font>page = <font color="#9876aa" style=" font-style:italic">get</font>(pageName).newInstance()
+            <font color="#cc7832">if </font>(!(page <font color="#cc7832">instanceof </font>AbstractPage)) {
+                <font color="#cc7832">throw new </font>ClassCastException(<font color="#6a8759">"page name [</font>${pageName}<font color="#6a8759">] create a page [</font>${page.<font color="#9876aa">class</font>}<font color="#6a8759">] is not a instance of AbstractPage."</font>)
+            }
+            page
+        }
+    
+        <font color="#629755" style=" font-style:italic">/**
+    </font><font color="#629755" style=" font-style:italic">     * init all pages 
+    </font><font color="#629755" style=" font-style:italic">     */
+    </font><font color="#629755" style=" font-style:italic">    </font><font color="#cc7832">private static void </font>init() {
+            <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages</font>.clear()
+            <font color="#808080">//get all classes of a package by Reflections.
+    </font><font color="#808080">        </font>Reflections reflections = <font color="#cc7832">new </font>Reflections(<font color="#d0d0ff" style=" font-weight:bold; font-style:italic">PACKAGE_NAME</font>)
+            <font color="#cc7832">def </font>classes = reflections.getTypesAnnotatedWith(<font color="#bbb529">Page</font>)
+            <font color="#cc7832">for </font>(<font color="#cc7832">def </font>page : classes) {
+                <font color="#cc7832">def </font>pageName = page.getAnnotation(<font color="#bbb529">Page</font>).pageName()
+                <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">logger</font>.debug(<font color="#6a8759">"loading [</font>${pageName}<font color="#6a8759">]:[</font>${page}<font color="#6a8759">]"</font>)
+                <font color="#d0d0ff" style=" font-weight:bold; font-style:italic">pages</font>.put(pageName, page)
+            }
+        }
+    }
+
+
+
+
+
+
+	这里面为了方便用了Reflections，这个包可以很容易在maven库里找到。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	现在我们可以简单的使用
+
+
+
+
+
+    
+    
+    PageFactory.<font color="#9876aa" style=" font-style:italic">createPage</font>(pageName)
+
+
+
+
+
+
+	来获得一个页面的实例了。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	通过以上的方法，我们还可以定义组件注释来标明组件、初始化的时候根据页面类型进行不同的处理等操作。这里就不在复述了。
+
+
+
+
+
+
+
+	示例工程地址：[https://github.com/assilzm/PageObjectFactoryDemo](https://github.com/assilzm/PageObjectFactoryDemo)
+
+
+
+

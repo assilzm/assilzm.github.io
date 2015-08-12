@@ -1,0 +1,331 @@
+---
+author: admin
+comments: true
+date: 2013-06-28 12:59:53+00:00
+layout: post
+slug: "\n            %e9%9b%b6%e5%ae%bd%e6%96%ad%e8%a8%80%ef%bc%88%e4%ba%8c%ef%bc%89%ef%bc%9a%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98%e6%95%b4%e7%90%86\n\
+  \        "
+title: 零宽断言（二）：一些小技巧
+wordpress_id: 28
+categories:
+- 正则
+---
+
+
+	由于本人较懒，因此就不大篇幅的讲理论了，在这里放上一些平时搜集的小技巧，希望大家举一反三，如有好的例子，欢迎提供~当然，如有发现本人编写时的错误或者建议请及时指正
+
+
+
+
+
+
+
+	以下是几个平时常遇到的问题，我大概整理了下。如有新例子我会及时更新（再次欢迎大家提供）。
+
+
+
+
+
+
+
+	**1、验证一个字符串长度在15以内，不能有回车，必须包含数字、必须包含字母，且不能含有"-"**
+
+
+
+
+
+
+
+	^(?=.{0,14}[a-zA-Z])(?=.{0,14}[0-9])(?!.{0,14}-).{0,15}$
+
+
+
+
+
+
+
+	[![11](http://www.assilzm.com/wp-content/uploads/2013/06/11.jpg)](http://www.assilzm.com/wp-content/uploads/2013/06/11.jpg)
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	**2、匹配不在HTML标签中的字符"class"**
+
+
+
+
+
+
+
+	class(?![^<>]*>)
+
+
+
+
+
+
+
+	[![12](http://www.assilzm.com/wp-content/uploads/2013/06/12.jpg)](http://www.assilzm.com/wp-content/uploads/2013/06/12.jpg)
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	**3、匹配最内层的DIV标签**
+
+
+
+
+
+
+
+	<div>((?!</?div>).)*</div>
+
+
+
+
+
+
+
+	[![13](http://www.assilzm.com/wp-content/uploads/2013/06/13.jpg)](http://www.assilzm.com/wp-content/uploads/2013/06/13.jpg)
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	**4、查找所有class为"link"的a标签的src的值**
+
+
+
+
+
+
+
+	<a\b(?=[^>]*?class="link")[^>]*?\bsrc="([^"]*)"[^>]*>
+
+
+
+
+
+
+
+	[![14](http://www.assilzm.com/wp-content/uploads/2013/06/14.jpg)](http://www.assilzm.com/wp-content/uploads/2013/06/14.jpg)
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	**5、删除重复行**
+
+
+
+
+
+
+
+	查找：
+
+
+
+
+
+
+
+	^(.+)[\r\n](?=[\s\S]*?^\1$)
+
+
+
+
+
+
+
+	替换为空
+
+
+
+
+
+
+
+	[![15](http://www.assilzm.com/wp-content/uploads/2013/06/15.jpg)](http://www.assilzm.com/wp-content/uploads/2013/06/15.jpg)
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	**6、清理HTML中input标签除了height和width之外的所有属性**
+
+
+
+
+
+
+
+	查找：
+
+
+
+
+
+
+
+	<input\b(?=(?:[^>]*?(\sheight=\d+))?)(?=(?:[^>]*?(\swidth=\d+))?)[^>]*>
+
+
+
+
+
+
+
+	替换：
+
+
+
+
+
+
+
+	<input$1$2>
+
+
+
+
+
+
+
+	[![10](http://www.assilzm.com/wp-content/uploads/2013/06/10.jpg)](http://www.assilzm.com/wp-content/uploads/2013/06/10.jpg)
+
+
+
+
+
+
+
+	**7、匹配不在table标签内的标签**
+
+
+
+
+
+
+
+	<(?!/?table)[^>]*>(?!(?:(?!</?table>).)*</table>)
+
+
+
+
+
+
+
+	[![16](http://www.assilzm.com/wp-content/uploads/2013/06/16.jpg)](http://www.assilzm.com/wp-content/uploads/2013/06/16.jpg)
+
+
+
+
+
+
+
+	 
+
+
+
+

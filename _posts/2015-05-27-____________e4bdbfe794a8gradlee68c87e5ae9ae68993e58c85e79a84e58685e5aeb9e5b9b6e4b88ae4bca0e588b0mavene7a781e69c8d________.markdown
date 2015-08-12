@@ -1,0 +1,49 @@
+---
+author: admin
+comments: true
+date: 2015-05-27 06:01:27+00:00
+layout: post
+slug: "\n            %e4%bd%bf%e7%94%a8gradle%e6%8c%87%e5%ae%9a%e6%89%93%e5%8c%85%e7%9a%84%e5%86%85%e5%ae%b9%e5%b9%b6%e4%b8%8a%e4%bc%a0%e5%88%b0maven%e7%a7%81%e6%9c%8d\n\
+  \        "
+title: 使用gradle指定打包的内容并上传到maven私服
+wordpress_id: 200
+categories:
+- Gradle
+---
+
+
+    artifacts {
+        <span style="color:#808080;">//</span><span style="color:#808080;font-family:'宋体';">打包</span><span style="color:#808080;">class
+    </span><span style="color:#808080;">    </span>archives jar
+        <span style="color:#808080;">//</span><span style="color:#808080;font-family:'宋体';">打包</span><span style="color:#808080;">javadocs
+    </span><span style="color:#808080;">    </span>archives javadocJar
+        <span style="color:#808080;">//</span><span style="color:#808080;font-family:'宋体';">打包源码
+    </span><span style="color:#808080;font-family:'宋体';">    </span>archives sourcesJar
+    }
+    
+    
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                <span style="color:#808080;">//group id
+    </span><span style="color:#808080;">            </span>pom.groupId = <span style="color:#cc7832;">this</span>.group
+                <span style="color:#808080;">//artifact id
+    </span><span style="color:#808080;">            </span>pom.artifactId = <span style="color:#cc7832;">this</span>.archivesBaseName
+                <span style="color:#808080;">//version
+    </span><span style="color:#808080;">            </span>pom.version = <span style="color:#cc7832;">this</span>.version
+                <span style="color:#808080;">//maven url
+    </span><span style="color:#808080;">            </span>repository(<span style="color:#d0d0ff;">url</span>: project.mavenUrl + <span style="color:#6a8759;">"content/repositories/thirdparty/"</span>) {
+                    <span style="color:#808080;">//username password
+    </span><span style="color:#808080;">                </span>authentication(
+                            <span style="color:#d0d0ff;">userName</span>: <span style="color:#6a8759;">"admin"</span>,
+                            <span style="color:#d0d0ff;">password</span>: <span style="color:#6a8759;">"admin123"
+    </span><span style="color:#6a8759;">                </span>)
+                }
+    
+            }
+        }
+    }
+    
+
+
+

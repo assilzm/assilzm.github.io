@@ -1,0 +1,31 @@
+---
+author: admin
+comments: true
+date: 2015-04-01 12:54:47+00:00
+layout: post
+slug: "\n            %e5%9c%a8gradle%e4%b8%ad%e8%b0%83%e7%94%a8%e5%b7%a5%e7%a8%8b%e4%b8%ad%e7%9a%84%e5%8f%af%e6%89%a7%e8%a1%8c%e7%b1%bb\n\
+  \        "
+title: 在Gradle中调用工程中的可执行类
+wordpress_id: 195
+categories:
+- Gradle
+---
+
+
+    task run(type:JavaExec){
+        //执行类在工程中的的路径
+        main = 'mainPackage.mainClass'
+        //所需要包含的包,sourceSets.main.runtimeClasspath的值为sourceSets中设置main对象中包含的包路径
+        classpath = sourceSets.main.runtimeClasspath
+    }
+
+
+
+
+
+
+	 
+
+
+
+

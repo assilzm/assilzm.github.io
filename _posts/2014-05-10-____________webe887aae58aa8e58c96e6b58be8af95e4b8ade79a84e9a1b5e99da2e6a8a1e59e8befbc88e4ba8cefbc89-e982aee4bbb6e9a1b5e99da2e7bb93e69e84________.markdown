@@ -1,0 +1,224 @@
+---
+author: admin
+comments: true
+date: 2014-05-10 05:49:34+00:00
+layout: post
+slug: "\n            web%e8%87%aa%e5%8a%a8%e5%8c%96%e6%b5%8b%e8%af%95%e4%b8%ad%e7%9a%84%e9%a1%b5%e9%9d%a2%e6%a8%a1%e5%9e%8b%ef%bc%88%e4%ba%8c%ef%bc%89-%e9%82%ae%e4%bb%b6%e9%a1%b5%e9%9d%a2%e7%bb%93%e6%9e%84\n\
+  \        "
+title: WEB自动化测试中的页面模型（二）–邮件页面结构分析
+wordpress_id: 113
+categories:
+- Selenium WebDriver
+- 自动化
+---
+
+
+	登陆页是一个很简单的单一页面，但是进入到邮件页面后，我们就会遇到很多的页面了，如何组织、设计这些页面会相对复杂一些。
+
+
+
+
+
+
+
+	我们首先简单的分析下页面结构：
+
+
+
+
+
+
+
+	[![MainFrame](http://www.assilzm.com/wp-content/uploads/2014/05/MainFrame-1024x567.jpg)](http://www.assilzm.com/wp-content/uploads/2014/05/MainFrame.jpg)
+
+
+
+
+
+
+
+	页面大致可以分为以上几个部分，工具栏、页签、和搜索不管切换到哪个功能（页签）中，都是会一直显示在页面中。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	**页面总体框架类**
+
+
+
+
+
+
+
+	因此我们可以抽象出一个总的框架页面MainFrame，它包含3个控件：工具栏、页签、搜索。
+
+
+
+
+
+
+
+	我们在组件包中新建3个类，分别是：ToolBar(工具栏),Tab(页签),SearchCondition（搜索）。他们分别代表自己所指示的控件。在以后这种可以公用的控件我都称之为组件。
+
+
+
+
+
+
+
+	在页面包中新建一个框架结构抽象类:MainFrame（上一章有使用到）,这个抽象类中包含以上3个组件的实例。
+
+
+
+
+
+    
+    
+    package email.pages
+    
+    import common.model.WebActions
+    import email.component.SearchCondition
+    import email.component.Tab
+    import email.component.ToolBar
+    
+    /**
+     * main frame
+     * @author Assilzm
+     * @createTime 2014-5-10 11:23.
+     */
+    abstract class MainFrame extends WebActions{
+    
+        /**
+         * email page tilte after login
+         */
+        final static String EMAIL_PAGE_TITLE="EMAIL_PAGE_TITLE"
+    
+        /**
+         * toolBar 
+         */
+        ToolBar toolBar=new ToolBar()
+        /**
+         * tab
+         */
+        Tab tab=new Tab()
+    
+        /**
+         * searchCondition
+         */
+        SearchCondition searchCondition=new SearchCondition()
+    }
+    
+
+
+
+
+
+
+	**首页页签**
+
+
+
+
+
+
+
+	我们所需要实现的功能页面全部都是MainFrame框架下的页签，因此，我们设计的功能页面类只要继承MainFrame即可。
+
+
+
+
+
+
+
+	我们简单的看了下各个页签可与发现，首页这个页签中左方包含了一个菜单，同时，这个菜单在草稿箱、发送邮件等页签中同样存在。因此我们可以把这个左方菜单也设计成一个LeftMenu组件。
+
+
+
+
+
+
+
+	这样我们就可以简单的设计下这个由框架结构和首页页签组成的页面HomePage了。
+
+
+
+
+
+    
+    
+    /**
+     * home page tab in main frame
+     * @author Assilzm
+     * @createTime 2014-5-10 11:27.
+     */
+    class HomePage extends MainFrame{
+    
+        MailMenu mailMenu=new MailMenu()
+    
+    }
+
+
+
+
+
+
+	如果这个时候我们的mailMenu有一个取得未读邮件的功能getInBoxPendingNumber，我们要在首页面中对该功能验证未读邮件和预期值相等，我们就可以为这个功能写一个简单的测试方法如下：
+
+
+
+
+
+    
+    
+        @Test
+        void testGetInBoxPendingNumber(){
+            HomePage homePage=new HomePage()
+            int actualPendingNumber=homePage.mailMenu.getInBoxPendingNumber()
+            assertThat("assert in box pending number is $EXPECTED_PENDING_NUMBER",actualPendingNumber,equalTo(EXPECTED_PENDING_NUMBER))
+        }
+
+
+
+
+
+
+	这个测试方法验证了我们当前的未读邮件数符合预期EXPECTED_PENDING_NUMBER，同时我们可以从代码中可以看出当前页面的结构和功能：一个页面homePage中有一个组件mailMenu，该组件有一个功能取得未读邮件数。
+
+
+
+
+
+
+
+	通过以上方法，我们可以把所有的页面都抽象成为框架--页面-组件-属性/方法的结构。从代码中描述清楚页面内部的各种关系，在调用的时候也就能有一个清晰的结构。
+
+
+
+
+
+
+
+	另外，我们可以认为页面是一个固定的结构，他的内部信息是变动的，但是结构是不变的。因此我们可以把页面设计成单例模式，但是组件是否设计成单例需要好好考虑。
+
+
+
+
+
+
+
+	下一章将会将怎么去设计一个组件：《[WEB自动化测试中的页面模型（三）-组件设计](http://www.assilzm.com/?p=129)》
+
+
+
+

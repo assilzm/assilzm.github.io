@@ -1,0 +1,486 @@
+---
+author: admin
+comments: true
+date: 2014-05-09 15:26:23+00:00
+layout: post
+slug: "\n            web%e8%87%aa%e5%8a%a8%e5%8c%96%e4%b8%ad%e6%b5%8b%e8%af%95%e7%9a%84%e9%a1%b5%e9%9d%a2%e6%a8%a1%e5%9e%8b%ef%bc%88%e4%b8%80%ef%bc%89-%e5%b7%a5%e7%a8%8b%e7%bb%93%e6%9e%84%e5%8f%8a%e7%99%bb%e9%99%86\n\
+  \        "
+title: WEB自动化测试中的页面模型（一）--工程结构及登陆页面
+wordpress_id: 78
+categories:
+- Selenium WebDriver
+- 自动化
+---
+
+# 
+	工程结构
+
+
+
+
+
+
+
+	[![project](http://www.assilzm.com/wp-content/uploads/2014/05/project.jpg)](http://www.assilzm.com/wp-content/uploads/2014/05/project.jpg)
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	_为了让不了解Groovy的同学理解，这里对字符串的连接进行一个说明，在Groovy中，双引号括起来的字符串，如"$a/$b"，等同于java中a+"/"+b,$符号后跟的是属性名称，在纯字母数字的时候可以直接使用$args1这样的表达式，而如果属性名比较复杂，也可以用${a_b_c}这样的大括号括起来的形式来表示属性名称。_
+
+
+
+
+
+
+# 
+	底层操作类
+
+
+
+
+
+
+
+	 首先，我们将所有的Web页面都抽象一下:所有的Web页面都可以点击、输入、获取内容等等，任何一个具体的Web都是这个抽象页面的子类。大家可以把这个页面命名为AbstractPage；或者根据它的实际用途来设计（其实它就是包含所有Web页面操作的类），将其命名为WebActions。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 因此我这里设计了一个很简单的操作类,我们今后的所有页面都将继承自该底层操作类，其中选择器部分直接使用String，Xpath还是其他就大家随意。为配合示例在这里暂时设计几个简单的方法，点击、输入、获取内容等等。 
+
+
+
+
+
+    
+    
+    abstract class WebActions {
+    
+        /***
+         * webdriver of current browser instance
+         */
+        static WebDriver driver
+    
+        private final static Logger logger=LogUtils.getLogger(WebActions)
+    
+        /**
+         * init webdriver
+         * @param driver
+         */
+        static void setDriver(WebDriver driver) {
+            this.driver = driver
+        }
+    
+        /**
+         * get webdriver
+         * @param driver
+         */
+        static WebDriver getDriver() {
+            return driver
+        }
+    
+        /**
+         * find element by xpath
+         * @param selector
+         * @return
+         */
+        WebElement findElement(String selector){
+            logger.debug("get a element with xpath $selector")
+            return driver.findElement(By.xpath(selector))
+        }
+    
+        /**
+         * find elements by xpath
+         * @param selector
+         * @return
+         */
+        List<WebElement> findElements(String selector){
+            logger.debug("get elements with xpath $selector")
+            return driver.findElements(By.xpath(selector))
+        }
+    
+        /**
+         * click at a element
+         * @param selector  selector of the element
+         */
+        void click(String selector){
+            logger.debug("click at [$selector]")
+        }
+    
+        /**
+         * type in a element
+         * @param selector selector of the element
+         * @param text text to type
+         */
+        void type(String selector,String text){
+            logger.debug("type [$text] in [$selector]")
+        }
+    
+        /**
+         * get attribute of a element
+         * @param selector selector of the element
+         * @param attributeName attributeName of the element
+         * @return element attribute text value
+         */
+        String getValue(String selector,String attributeName){
+            return "[$attributeName] value of [$selector]"
+        }
+    
+        /**
+         * get attribute of a elements
+         * @param selector selector of the elements
+         * @param attributeName attributeName of the element
+         * @return elements attribute text value
+         */
+        List<String> getValues(String selector,String attributeName){
+            return ["[$attributeName] value of [$selector]"]
+        }
+    
+        /**
+         * get text of a element
+         * @param selector selector of the element
+         * @return element text value
+         */
+        String getText(String selector){
+            return "text of [$selector]"
+        }
+    
+        /**
+         * get text of a elements
+         * @param selector selector of the elements
+         * @return elements text value
+         */
+        List<String> getTexts(String selector){
+            return ["texts of [$selector]"]
+        }
+    
+        /**
+         * select a radio
+         * @param selector  selector of the element
+         */
+        void selectRadio(String selector){
+            logger.debug("select radio in [$selector]")
+        }
+    
+        /**
+         * unselect a radio
+         * @param selector  selector of the element
+         */
+        void unSelectRadio(String selector){
+            logger.debug("unselect radio in [$selector]")
+        }
+    
+        /**
+         * select a checkbox
+         * @param selector  selector of the element
+         */
+        void selectCheckBox(String selector){
+            logger.debug("select checkbox in [$selector]")
+        }
+    
+        /**
+         * unselect a checkbox
+         * @param selector  selector of the element
+         */
+        void unSelectCheckBox(String selector){
+            logger.debug("unselect checkbox in [$selector]")
+        }
+    
+        /**
+         * get current window title
+         * @return current window title
+         */
+        String getTitle(){
+            return  "window title"
+        }
+    
+        /**
+         * switch to frame
+         * @param framePath frame path
+         */
+        void switchFrame(String framePath){
+            logger.debug("switch to frame $framePath")
+        }
+    
+    }
+
+
+
+
+
+# 
+	登陆页面
+
+
+
+
+
+
+
+	 设计登录页时，我将一些页面上的常量设计为属性，比如登陆页标题，控件的选择器等等。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 页面的功能设计为方法，页面功能无非就是登陆，怎么进入登陆页这个功能并不属于该页面，因此我们简单的设计登陆功能为一个login方法。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 页面中会涉及一些选择器（selector），这些选择器我就留了空，大家自己肯定知道怎么去设计。
+
+
+
+
+
+    
+    
+    package email.pages
+    
+    import common.model.WebActions
+    
+    
+    /**
+     * email login page
+     * Created by Assilzm on 2014/5/9.
+     */
+    class LoginPage extends WebActions{
+    
+        /**
+         * login page tilte
+         */
+        final static String LOGIN_PAGE_TITLE="LOGIN_PAGE_TITLE"
+    
+        /**
+         * user name input element selector
+         */
+        final static String USER_NAME_ELEMENT_SELECTOR="USER_NAME_ELEMENT_SELECTOR"
+    
+        /**
+         * password input element selector
+         */
+        final static String PASSWORD_ELEMENT_SELECTOR="PASSWORD_ELEMENT_SELECTOR"
+    
+        /**
+         * auto login input element selector
+         */
+        final static String AUTO_LOGIN_ELEMENT_SELECTOR="AUTO_LOGIN_ELEMENT_SELECTOR"
+    
+        /**
+         * submit button element selector
+         */
+        final static String SUBMIT_ELEMENT_SELECTOR="SUBMIT_ELEMENT_SELECTOR"
+    
+        /**
+         * login the email system
+         * @param userName username
+         * @param password password
+         * @param autoLogin is auto login
+         */
+        void login(String userName,String password,boolean autoLogin=false){
+            type(USER_NAME_ELEMENT_SELECTOR,userName)
+            type(PASSWORD_ELEMENT_SELECTOR,password)
+            if(autoLogin)
+                selectCheckBox(AUTO_LOGIN_ELEMENT_SELECTOR)
+            click(SUBMIT_ELEMENT_SELECTOR)
+        }
+    }
+    
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 现在调用就方便了，设置好类里的各属性，然后
+
+
+
+
+
+    
+    
+    new LoginPage().login(userName,passWord)
+
+
+
+
+
+
+	 就可以登陆了。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 接下来我们可以为这个方法写一个测试，让它在登录不正确的时候能抛出异常。我们可以简单的设计一个Junit的测试方法，其中会用到一个页面HomePage,这是登录成功后的页面，他有一个预期的窗口文本属性EMAIL_PAGE_TITLE：
+
+
+
+
+
+    
+    
+        @Test
+        void testLogin() {
+            LoginPage loginPage=new LoginPage()
+            assertThat("assert login page title contains $loginPage.LOGIN_PAGE_TITLE",loginPage.getTitle(),containsString(loginPage.LOGIN_PAGE_TITLE))
+            loginPage.login(userName,password)
+            HomePage homePage=new HomePage()
+            assertThat("assert email page title contains $homePage.EMAIL_PAGE_TITLE",homePage.getTitle(),containsString(homePage.EMAIL_PAGE_TITLE))
+        }
+
+
+
+
+
+
+	 该测试方法会在登录的同时验证登录前和登录后的预期标题，这就完成了一个登录功能的测试。
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	**使用链式结构**
+
+
+
+
+
+
+
+	 同样，如果需要使用链式功能测试，还可以直接让login返回HomePage来标明页面间的关系。当然，这需要在login方法表示的是"成功登录"的情况下才适用。因此这种方法并不是适应所有的项目，需要慎用，我们让登录方法表示登录成功：
+
+
+
+
+
+    
+    
+        HomePage loginSuccess(String userName,String password,boolean autoLogin=false){
+            assertThat("assert login page title contains $loginPage.LOGIN_PAGE_TITLE",loginPage.getTitle(),containsString(loginPage.LOGIN_PAGE_TITLE))
+            type(USER_NAME_ELEMENT_SELECTOR,userName)
+            type(PASSWORD_ELEMENT_SELECTOR,password)
+            if(autoLogin)
+                selectCheckBox(AUTO_LOGIN_ELEMENT_SELECTOR)
+            click(SUBMIT_ELEMENT_SELECTOR)
+            HomePage homePage= new HomePage()
+            assertThat("assert email page title contains $homePage.EMAIL_PAGE_TITLE",homePage.getTitle(),containsString(homePage.EMAIL_PAGE_TITLE))
+            return homePage
+        }
+
+
+
+
+
+
+	 调用：
+
+
+
+
+
+    
+    
+    LoginPage loginPage=new LoginPage()
+    HomePage homePage=loginPage.loginSuccess(userName,password)
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+	 下一章：《[WEB自动化测试中的页面模型（二）-邮件页面结构分析](http://www.assilzm.com/?p=113)》
+
+
+
+
+
+
+
+	 组件设计方到后面去写。
+
+
+
+
