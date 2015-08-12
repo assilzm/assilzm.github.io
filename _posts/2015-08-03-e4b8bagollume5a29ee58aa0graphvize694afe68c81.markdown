@@ -42,7 +42,7 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 
 
 
-```shell
+```
     yum install 'graphviz*'
 ```
 ### 2、修改_**$gems/gollum-4.0.0/bin/**_下的_**gollum**_执行文件，对_**opts**_对象增加_**dot**_参数支持，修改后的_**opts**_对象如下：
@@ -268,7 +268,7 @@ OK，搞定。启动gollum的时候使用dot参数启动即可。
 
 
 
-```shell
+```
     gollum --dot /usr/bin/dot /wikidir/wiki
 
 ```
