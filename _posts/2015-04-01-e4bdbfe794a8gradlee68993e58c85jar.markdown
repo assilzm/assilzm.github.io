@@ -9,7 +9,9 @@ wordpress_id: 192
 categories:
 - Gradle
 ---
+
 在build.gradle中新增任务releaseJar，类型为jar
+
 ```java
 task releaseJar(type: Jar) {
   //设置manifest.mf的属性
@@ -39,4 +41,5 @@ task releaseJar(type: Jar) {
   with jar
 }
 ```
+
 上述代码是一个task，可供单独执行，当然也可以重写Gradle默认的jar方法来实现打包，将task releaseJar(type: Jar) 改为jar即可。
