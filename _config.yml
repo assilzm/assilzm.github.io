@@ -1,19 +1,36 @@
-# General
-name: 大灰狼窝
-description: "另一个垃圾桶"
-url: http://assilzm.github.io
+# Site wide configuration
 
-markdown: redcarpet
+title:
+description:
+logo: # 120x120 px default image used for Twitter summary card
+teaser: # 400x250 px default teaser image used in image archive grid
+locale:
+url:
+
+# Jekyll configuration
+
+sass:
+    sass_dir: _sass
+    style: compressed
+permalink: /:categories/:title/
+kramdown:
+  toc_levels: 1..2
 highlighter: pygments
+gems:
+  - jekyll-sitemap
 
-paginate: 5
-permalink: /:title
 
-# Social share and comments.
-twitter: assilzm
-github: assilzm
-google: +assilzm
+# Site owner
+owner:
+  name:
+  email:
+  twitter:
+  google:
+    ad-client: 
+    ad-slot: 
+  bio: 
+  avatar: bio-photo.jpg # 160x160 px image for author byline
+disqus-shortname:
 
-# RSS feed
-rss-feed-limit: 10
-rss-show-full: "no"
+
+exclude: ["lib", "config.rb", ".sass-cache", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "*.sublime-project", "*.sublime-workspace", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "node_modules", "Gruntfile.js", "package.json"]
