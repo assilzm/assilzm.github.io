@@ -1,36 +1,35 @@
-# Site wide configuration
-
-title: 大灰狼窝
-description: 另一个垃圾桶
-logo: http://assilzm.github.io/images/1506245.jpg
-teaser: # 400x250 px default teaser image used in image archive grid
-locale:
-url: http://www.assilzm.com
-
 # Jekyll configuration
 
-sass:
-    sass_dir: _sass
-    style: compressed
-permalink: /:categories/:title/
-kramdown:
-  toc_levels: 1..2
+name: 大灰狼窝
+description: 另一个垃圾桶
+
+# url is currently only used only for the RSS feed in feed.xml
+url: http://assilzm.github.io
+
+# baseurl will often be '', but for a project page on gh-pages, it needs to
+# be the project name.
+# *** IMPORTANT: If your local "jekyll serve" throws errors change this to '' or
+#     run it like so: jekyll serve --baseurl=''
+baseurl: /jekyll-clean
+
+# This can be '' to hide the Github nav button
+github: 'scotte/jekyll-clean'
+
+# Set this to your UA-# value, or '' to disable the block completely
+gaaccount: ''
+
+# Set this to your disqus shortname to enable comments. Note that the 'comments'
+# setting below must also be true. Individual posts can override 'comments' to
+# disable on a post-by-post basis
+disqus: ''
+comments: true
+
+permalink: /:year/:month/:title
+paginate: 3
+
 highlighter: pygments
-gems:
-  - jekyll-sitemap
+markdown: redcarpet
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
 
-
-# Site owner
-owner:assilzm
-  name:assilzm
-  email:assilzm@gmail.com
-  twitter:assilzm
-  google:assilzm
-    ad-client:
-    ad-slot:
-  bio:
-  avatar: bio-photo.jpg # 160x160 px image for author byline
-disqus-shortname:
-
-
-exclude: ["lib", "config.rb", ".sass-cache", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "*.sublime-project", "*.sublime-workspace", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "node_modules", "Gruntfile.js", "package.json"]
+exclude: ['README.md', 'LICENSE']
