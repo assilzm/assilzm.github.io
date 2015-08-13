@@ -121,6 +121,6 @@ OK，搞定。重启gollum，现在新建一个page，录入以下内容：
 
 预览或保存，就可以看到流程图了。
 
-![](http://www.assilzm.com/wp-content/uploads/2015/08/20150804175632.jpg)
+![](http://assilzm.github.io/images/2015/08/20150804175632.jpg)
 
 生成的流程图文件会存放在$wikidir/wiki/tmp下

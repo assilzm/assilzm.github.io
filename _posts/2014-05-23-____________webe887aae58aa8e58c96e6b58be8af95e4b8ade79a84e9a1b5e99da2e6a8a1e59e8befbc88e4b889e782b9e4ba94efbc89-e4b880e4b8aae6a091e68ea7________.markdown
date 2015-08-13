@@ -15,7 +15,7 @@ categories:
 本来这一章准备写点复杂的页面设计的，但是看平时很多人对树结构很头疼，因此在本章中，我以一个比较完整的树结构的设计设计对上一章进行一点补充。
 本次我们要设计一个简单的树，随便找了个例子：[http://www.ztree.me/v3/demo.php#102](http://www.ztree.me/v3/demo.php#102)如图：
 
-[![tree](http://www.assilzm.com/wp-content/uploads/2014/05/tree.jpg)](http://www.assilzm.com/wp-content/uploads/2014/05/tree.jpg)
+[![tree](http://assilzm.github.io/images/2014/05/tree.jpg)](http://assilzm.github.io/images/2014/05/tree.jpg)
 
 这棵树具备以下特征：
  1. 树可以有多个根节点

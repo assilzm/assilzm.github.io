@@ -13,7 +13,7 @@ categories:
 ---
 #工程结构
 
-[![project](http://www.assilzm.com/wp-content/uploads/2014/05/project.jpg)](http://www.assilzm.com/wp-content/uploads/2014/05/project.jpg)
+[![project](http://assilzm.github.io/images/2014/05/project.jpg)](http://assilzm.github.io/images/2014/05/project.jpg)
 
 *为了让不了解Groovy的同学理解，这里对字符串的连接进行一个说明，在Groovy中，双引号括起来的字符串，如"$a/$b"，等同于java中a+"/"+b,$符号后跟的是属性名称，在纯字母数字的时候可以直接使用$args1这样的表达式，而如果属性名比较复杂，也可以用${a_b_c}这样的大括号括起来的形式来表示属性名称。*
 

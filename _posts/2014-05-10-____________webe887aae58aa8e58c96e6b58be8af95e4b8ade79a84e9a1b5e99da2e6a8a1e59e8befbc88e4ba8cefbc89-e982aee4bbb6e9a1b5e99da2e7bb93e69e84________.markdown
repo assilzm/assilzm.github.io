@@ -15,7 +15,7 @@ categories:
 
 我们首先简单的分析下页面结构：
 
-[![MainFrame](http://www.assilzm.com/wp-content/uploads/2014/05/MainFrame-1024x567.jpg)](http://www.assilzm.com/wp-content/uploads/2014/05/MainFrame.jpg)
+[![MainFrame](http://assilzm.github.io/images/2014/05/MainFrame-1024x567.jpg)](http://assilzm.github.io/images/2014/05/MainFrame.jpg)
 
 页面大致可以分为以上几个部分，工具栏、页签、和搜索不管切换到哪个功能（页签）中，都是会一直显示在页面中。
 
