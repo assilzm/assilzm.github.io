@@ -1,11 +1,11 @@
 # Site wide configuration
 
-title:
-description:
-logo: # 120x120 px default image used for Twitter summary card
+title: 大灰狼窝
+description: 另一个垃圾桶
+logo: http://assilzm.github.io/images/1506245.jpg
 teaser: # 400x250 px default teaser image used in image archive grid
 locale:
-url:
+url: http://www.assilzm.com
 
 # Jekyll configuration
 
@@ -21,14 +21,14 @@ gems:
 
 
 # Site owner
-owner:
-  name:
-  email:
-  twitter:
-  google:
-    ad-client: 
-    ad-slot: 
-  bio: 
+owner:assilzm
+  name:assilzm
+  email:assilzm@gmail.com
+  twitter:assilzm
+  google:assilzm
+    ad-client:
+    ad-slot:
+  bio:
   avatar: bio-photo.jpg # 160x160 px image for author byline
 disqus-shortname:
 
