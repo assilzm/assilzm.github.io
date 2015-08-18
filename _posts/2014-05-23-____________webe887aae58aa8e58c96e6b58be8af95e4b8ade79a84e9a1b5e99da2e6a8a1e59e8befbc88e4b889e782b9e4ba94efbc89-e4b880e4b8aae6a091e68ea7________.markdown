@@ -103,7 +103,8 @@ Tree() {
 Tree(String selector) {
     containerSelector = selector
 }
-        ```
+```
+
 有了这些属性，我们设计一下取得一个节点的选择器的方法,假设我们要找到一个节点，必须知道这个节点所经过的路径，比如：[根节点(父节点1)->父节点2->父节点3->父节点4->父节点5->所需要找的节点]，我们把这个节点序列设计成一个List。可能所需要操作的步骤如下：
 
  1. 找到第一个父节点(也就是根节点）
@@ -117,6 +118,7 @@ Tree(String selector) {
 
 我们设计一个getNodeSelector方法，传入一个为List<String>的节点路径参树，生成选择器。这个方法可能用到其他两个方法:根据提供的显示文本返回某个子节点选择器的方法getSubNodeSelector、展开某个节点的方法unfoldNode
 getNodeSelector：
+
 ```java
 /**
  * get node selector with node path list
@@ -135,8 +137,10 @@ String getNodeSelector(List<String> pathList) {
     logger.debug("create node selector:$nodeSelector")
     return "$nodeSelector/$NODE_SELECTOR"
 }
-        ```
+```
+
 getSubNodeSelector：
+
 ```java
 /**
  * get a sub node selector with displayed text of a node selector
@@ -152,8 +156,10 @@ private String getSubNodeSelector(String nodeSelector, String subNodeText) {
         return null
     return nodeSelector + "[$nodeIndex]"
 }
-        ```
+```
+
 unfoldNode：
+
 ```java
 /**
  * unfold a father node
@@ -170,8 +176,10 @@ boolean unfoldNode(String nodeSelector) {
     }
     return hasSubNodes
 }
-        ```
+```
+
 好了，现在我们可以取得任意的一个节点的选择器了。如果我们要点击一个节点，可以很简单的完成：
+
 ```java
 /**
  * click at a node
@@ -182,14 +190,17 @@ void clickNode(List<String> pathList){
     assertNotNull("assert node selector of $pathList is exist",nodeSelector)
     click(nodeSelector)
 }
-        ```
+```
+
 接下来只要扩展方法，完全可以实现所有的其他操作。大家自行扩展即可，该代码也可以在示例工程中找到。
 PS:细心的同学可以可以发现，我们定义的根节点根本没有用上。其实如果该页面中只有一棵树，我们完全可以不管树所在的容器，直接使用根节点的ztree这个class来完成定位，至于怎么修改一下该控件结构来达到这个目的.同样，有的地方对于异常数据的验证也不完整，就交给大家自己解决啦~
 配合上前面几张所讲的页面控件的调用方法，我们要点击"叶子节点122",就可以如下操作啦：
+
 ```java
 Tree tree=new Tree()
 String nodePath="父节点1->父节点12->叶子节点122";
 List<String> nodeList= Arrays.asList(nodePath.split("->"))
 tree.clickNode(nodeList)
-            ```
+```
+
 补充就到这里，复杂页面的设计我有空了会更新。

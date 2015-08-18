@@ -173,7 +173,8 @@ categories:
    }
 
 }
-    ```
+```
+
 # 登陆页面
 
 设计登录页时，我将一些页面上的常量设计为属性，比如登陆页标题，控件的选择器等等。
@@ -181,7 +182,8 @@ categories:
 页面的功能设计为方法，页面功能无非就是登陆，怎么进入登陆页这个功能并不属于该页面，因此我们简单的设计登陆功能为一个login方法。
 
 页面中会涉及一些选择器（selector），这些选择器我就留了空，大家自己肯定知道怎么去设计。
-```java
+
+```groovy
 package email.pages
 
 import common.model.WebActions
@@ -232,15 +234,18 @@ class LoginPage extends WebActions{
         click(SUBMIT_ELEMENT_SELECTOR)
     }
 }
-    ```
+```
 
  现在调用就方便了，设置好类里的各属性，然后
+
  ```java
     new LoginPage().login(userName,passWord)
-    ```
+```
+
  就可以登陆了。
 
  接下来我们可以为这个方法写一个测试，让它在登录不正确的时候能抛出异常。我们可以简单的设计一个Junit的测试方法，其中会用到一个页面HomePage,这是登录成功后的页面，他有一个预期的窗口文本属性EMAIL_PAGE_TITLE：
+
  ```java
  @Test
  void testLogin() {
@@ -250,12 +255,14 @@ class LoginPage extends WebActions{
      HomePage homePage=new HomePage()
      assertThat("assert email page title contains $homePage.EMAIL_PAGE_TITLE",homePage.getTitle(),containsString(homePage.EMAIL_PAGE_TITLE))
  }
-        ```
- 该测试方法会在登录的同时验证登录前和登录后的预期标题，这就完成了一个登录功能的测试。
+```
+
+该测试方法会在登录的同时验证登录前和登录后的预期标题，这就完成了一个登录功能的测试。
 
 **使用链式结构**
 
  同样，如果需要使用链式功能测试，还可以直接让login返回HomePage来标明页面间的关系。当然，这需要在login方法表示的是"成功登录"的情况下才适用。因此这种方法并不是适应所有的项目，需要慎用，我们让登录方法表示登录成功：
+
  ```java
  HomePage loginSuccess(String userName,String password,boolean autoLogin=false){
      assertThat("assert login page title contains $loginPage.LOGIN_PAGE_TITLE",loginPage.getTitle(),containsString(loginPage.LOGIN_PAGE_TITLE))
@@ -268,14 +275,14 @@ class LoginPage extends WebActions{
      assertThat("assert email page title contains $homePage.EMAIL_PAGE_TITLE",homePage.getTitle(),containsString(homePage.EMAIL_PAGE_TITLE))
      return homePage
  }
-        ```
+```
 
  调用：
 
  ```java
 LoginPage loginPage=new LoginPage()
 HomePage homePage=loginPage.loginSuccess(userName,password)
-    ```
+```
 
  下一章：《[WEB自动化测试中的页面模型（二）-邮件页面结构分析](http://www.assilzm.com/?p=113)》
  组件设计方到后面去写。

@@ -25,6 +25,7 @@ _但是，通常情况下会遇到一些个小问题：由于组件是通用的�
 我们以邮箱中的通讯录列表为例，通过简单的分析，我们发现所有的通讯录列表都在一个class为nui-table的div下的table中，他的列头所在的HTML元素为thead，表体区域所在的HTML元素为nui-table-body。知道了这些信息后，我们简单的设计下该控件的各属性（以xpath选择器为例）：
 
 **定义属性**
+
 ```java
 /**
  * Grid component
@@ -79,7 +80,7 @@ class Grid extends WebActions {
         containerSelector = selector
     }
 }
-    ```
+```
 
 在以上代码中，我们定义了一个列表（Grid）控件的默认区域，在初始化的时候，如果不传参数，那么默认这个列表所在页面中的区域为//div[@class='nui-table']，如果传入参数初始化，就以传入的参数作于列表所在的区域。这样就可以处理列表中的元素和页面中的元素存在相同的相对路径或者是页面中有多个列表控件的情况。
 
@@ -97,20 +98,22 @@ class Grid extends WebActions {
         WebElement getCell(int rowIndex,int columnIndex){
             return findElement("$containerSelector/$TABLE_TAGNAME/$TABLE_BODY_TAGNAME/$TR_TAGNAME[$rowIndex]/$TD_TAGNAME[$columnIndex]")
         }
-        ```
+```
 
 在以上方法中，table、tr、td的标签是写死的，不过这些可以作为属性定义出来，同样可以支持div之类的标签组成的表格。
 
 我们在页面类里加入该控件后，外部调用的时候就可以直接使用如下方法来取得一个单元格（异常处理大家自己解决就是啦）：
+
 ```java
     ContactsPage contactsPage=new ContactsPage()
     contactsPage.grid.getCell(row,column)
-    ```
+```
 这个控件现在就可以放到任意的页面中使用，调用方法完全一致。
 
 另外，更常使用的是根据列头及单元格显示文本来获取单元格，同样很简单，这次我们需要多一个用到获取所有列头文本的方法，这两个方法如下：
 
 **通过显示文本获取单元格**
+
 ```java
 /**
  * find a cell element with column head text and cell text
@@ -158,7 +161,8 @@ Grid getGrid(){
     switchFrame(FRAME)
     return new Grid()
 }
-        ```
+```
+
 组件设计大概就是这些内容，对组件的处理无非就是拼接字符串。因此使用xpath，css之类的方法会比单纯的id、name更为实用：他们能让多次的元素查找变为一次，大大的提高效率。
 
 下一章为本章补充：[WEB自动化测试中的页面模型（三点五）-树组件设计](http://www.assilzm.com/?p=138)

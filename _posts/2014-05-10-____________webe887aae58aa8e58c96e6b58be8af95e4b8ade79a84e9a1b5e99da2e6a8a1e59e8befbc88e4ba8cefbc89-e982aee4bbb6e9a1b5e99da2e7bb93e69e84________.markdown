@@ -26,7 +26,8 @@ categories:
 我们在组件包中新建3个类，分别是：ToolBar(工具栏),Tab(页签),SearchCondition（搜索）。他们分别代表自己所指示的控件。在以后这种可以公用的控件我都称之为组件。
 
 在页面包中新建一个框架结构抽象类:MainFrame（上一章有使用到）,这个抽象类中包含以上3个组件的实例。
-```java
+
+```groovy
 package email.pages
 
 import common.model.WebActions
@@ -60,7 +61,7 @@ abstract class MainFrame extends WebActions{
      */
     SearchCondition searchCondition=new SearchCondition()
 }
-    ```
+```
 
 **首页页签**
 
@@ -69,7 +70,8 @@ abstract class MainFrame extends WebActions{
 我们简单的看了下各个页签可与发现，首页这个页签中左方包含了一个菜单，同时，这个菜单在草稿箱、发送邮件等页签中同样存在。因此我们可以把这个左方菜单也设计成一个LeftMenu组件。
 
 这样我们就可以简单的设计下这个由框架结构和首页页签组成的页面HomePage了。
-```java
+
+```groovy
 /**
  * home page tab in main frame
  * @author Assilzm
@@ -80,8 +82,10 @@ class HomePage extends MainFrame{
     MailMenu mailMenu=new MailMenu()
 
 }
-    ```
+```
+
 如果这个时候我们的mailMenu有一个取得未读邮件的功能getInBoxPendingNumber，我们要在首页面中对该功能验证未读邮件和预期值相等，我们就可以为这个功能写一个简单的测试方法如下：
+
 ```java
 @Test
 void testGetInBoxPendingNumber(){
@@ -89,7 +93,8 @@ void testGetInBoxPendingNumber(){
     int actualPendingNumber=homePage.mailMenu.getInBoxPendingNumber()
     assertThat("assert in box pending number is $EXPECTED_PENDING_NUMBER",actualPendingNumber,equalTo(EXPECTED_PENDING_NUMBER))
 }
-        ```
+```
+
 这个测试方法验证了我们当前的未读邮件数符合预期EXPECTED_PENDING_NUMBER，同时我们可以从代码中可以看出当前页面的结构和功能：一个页面homePage中有一个组件mailMenu，该组件有一个功能取得未读邮件数。
 
 通过以上方法，我们可以把所有的页面都抽象成为框架--页面-组件-属性/方法的结构。从代码中描述清楚页面内部的各种关系，在调用的时候也就能有一个清晰的结构。
