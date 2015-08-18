@@ -7,7 +7,7 @@ slug: '%e4%b8%bagollum%e5%a2%9e%e5%8a%a0graphviz%e6%94%af%e6%8c%81'
 title: 为gollum增加graphviz支持
 wordpress_id: 203
 categories:
-- 未分类
+- gollum
 ---
 
 

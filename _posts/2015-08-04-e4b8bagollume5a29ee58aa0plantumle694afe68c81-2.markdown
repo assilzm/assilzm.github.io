@@ -7,7 +7,7 @@ slug: '%e4%b8%bagollum%e5%a2%9e%e5%8a%a0plantuml%e6%94%af%e6%8c%81-2'
 title: 为gollum增加plantuml支持
 wordpress_id: 212
 categories:
-- 未分类
+- gollum
 ---
 
 
