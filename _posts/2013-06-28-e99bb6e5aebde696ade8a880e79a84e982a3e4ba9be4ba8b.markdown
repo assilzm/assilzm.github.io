@@ -36,7 +36,6 @@ categories:
 
 如：a(?=b),匹配一个后面是b的a
 
-
 [![1](http://assilzm.github.io/images/2013/06/1.jpg)](http://assilzm.github.io/images/2013/06/1.jpg)
 
 *(?!exp)*: 匹配当前位置后面不是exp的位置
