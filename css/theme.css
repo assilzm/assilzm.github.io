@@ -20,6 +20,11 @@ body {
     font-size: 1.3em;
 }
 
+.catalog h2 {
+    color: #ee4444;
+    font-size: 1em;
+}
+
 .sidebar a {
     color: #428bca;
 }
