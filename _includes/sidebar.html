@@ -12,10 +12,10 @@
 </div>
 
 <div class="sidebar well catalog">
-    <h1>分类索引</h1>
+    <!-- <h1>分类索引</h1> -->
     <ul>
       {% for category in site.categories %}
-      <h2>{{ category | first }}</h2>
+      <h1>{{ category | first }}</h1>
       <!-- </span>{{ category | last | size }}</span> -->
       <ul class="arc-list">
           {% for post in category.last %}
