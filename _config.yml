@@ -28,10 +28,8 @@ permalink: /:year/:month/:title
 paginate: 3
 
 highlighter: pygments
-markdown: kramdown  # [ maruku | rdiscount | kramdown | redcarpet ]
-kramdown:
-  input:         GFM
-  auto_ids:      true
-  auto_id_prefix:'id-'
+markdown: redcarpet
+redcarpet:
+  extensions: ["smart", "tables", "no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "with_toc_data"]
 
 exclude: ['README.md', 'LICENSE']
