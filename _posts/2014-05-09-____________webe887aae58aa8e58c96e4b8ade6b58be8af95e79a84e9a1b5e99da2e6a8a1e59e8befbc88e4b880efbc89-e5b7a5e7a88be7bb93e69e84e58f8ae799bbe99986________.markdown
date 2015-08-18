@@ -23,7 +23,7 @@ categories:
 
  因此我这里设计了一个很简单的操作类,我们今后的所有页面都将继承自该底层操作类，其中选择器部分直接使用String，Xpath还是其他就大家随意。为配合示例在这里暂时设计几个简单的方法，点击、输入、获取内容等等。
 
- ```java
+ ```groovy
  abstract class WebActions {
 
    /***
@@ -276,6 +276,6 @@ class LoginPage extends WebActions{
 LoginPage loginPage=new LoginPage()
 HomePage homePage=loginPage.loginSuccess(userName,password)
     ```
-    
+
  下一章：《[WEB自动化测试中的页面模型（二）-邮件页面结构分析](http://www.assilzm.com/?p=113)》
  组件设计方到后面去写。
