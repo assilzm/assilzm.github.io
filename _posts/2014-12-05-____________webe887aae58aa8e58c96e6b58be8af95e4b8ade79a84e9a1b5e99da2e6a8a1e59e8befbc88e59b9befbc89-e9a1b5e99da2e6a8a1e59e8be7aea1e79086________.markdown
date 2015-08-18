@@ -8,7 +8,7 @@ slug: "\n            web%e8%87%aa%e5%8a%a8%e5%8c%96%e6%b5%8b%e8%af%95%e4%b8%ad%e
 title: Web自动化测试中的页面模型（四）-页面模型管理
 wordpress_id: 186
 categories:
-- 自动化
+- Selenium WebDriver
 ---
 
 在Web自动化测试中，如果使用页面模型，页面类一多，就不可避免的会遇到页面模型的管理问题。

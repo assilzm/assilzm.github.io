@@ -9,7 +9,6 @@ title: WEB自动化测试中的页面模型（前言）
 wordpress_id: 73
 categories:
 - Selenium WebDriver
-- 自动化
 ---
 
 以下是废话，不想看的直接进入正题：《[WEB自动化测试中的页面模型（一） 工程结构及登陆页面](http://www.assilzm.com/?p=78)》
