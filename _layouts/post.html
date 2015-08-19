@@ -15,12 +15,14 @@
             <div class="post-content">
             {{ content }}
             </div>
-            {% if page.comments %}
-            <div id="disqus_thread">
-                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-            </div>
-            {% endif %}
+            <section>
+              <h3>Latest Comments</h3>
+              <ul class="ds-recent-comments" data-num-items="10" data-show-avatars="0" data-show-time="0" data-show-title="0" data-show-admin="0" data-excerpt-length="18"></ul>
+            </section>
+            <section style="width:250px;">
+              <h3>Recently Visitors</h3>
+                <ul class="ds-recent-visitors" data-num-items="4" data-avatar-size="45" style="margin-top:10px;"></ul>
+            </section>
             </div>
           </div>
           <div class="pagination">
@@ -36,5 +38,4 @@
     </div>
 </div>
 
-{% include disqus-comments.html %}
 {% include footer.html %}
