@@ -26,7 +26,7 @@ categories:
 
 在页面包中新建一个框架结构抽象类:MainFrame（上一章有使用到）,这个抽象类中包含以上3个组件的实例。
 
-```groovy
+```java
 package email.pages
 
 import common.model.WebActions
