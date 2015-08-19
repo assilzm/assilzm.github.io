@@ -20,6 +20,7 @@ categories:
 gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通常在ruby安装目录下。
 
 ##1、下载一份plantuml的[jar包](http://ncu.dl.sourceforge.net/project/plantuml/plantuml.jar)。
+
 *可能需要翻墙。下载完成后放到一个目录下*。如：/root/plantuml/plantuml.jar。
 
 ##2、为_**gollum-lib**_增加一个plantuml的filter
@@ -104,7 +105,7 @@ gollum直接使用gem安装，gems目录路径使用$gems代替，该路径通�
 
 OK，搞定。重启gollum，现在新建一个page，录入以下内容：
 
-```DOT
+```
 @startuml
     digraph G {
         main -> parse -> execute;
