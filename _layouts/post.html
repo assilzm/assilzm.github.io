@@ -15,14 +15,14 @@
             <div class="post-content">
             {{ content }}
             </div>
-            <section>
+            <!-- <section>
               <h3>Latest Comments</h3>
               <ul class="ds-recent-comments" data-num-items="10" data-show-avatars="0" data-show-time="0" data-show-title="0" data-show-admin="0" data-excerpt-length="18"></ul>
             </section>
             <section style="width:250px;">
               <h3>Recently Visitors</h3>
                 <ul class="ds-recent-visitors" data-num-items="4" data-avatar-size="45" style="margin-top:10px;"></ul>
-            </section>
+            </section> -->
             <div id="comments">
                 <div class="ds-thread" {% if page.id %}data-thread-key="{{ page.id }}"{% endif %}  data-title="{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}"></div>
             </div>
