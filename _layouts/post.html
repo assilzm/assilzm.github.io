@@ -23,6 +23,9 @@
               <h3>Recently Visitors</h3>
                 <ul class="ds-recent-visitors" data-num-items="4" data-avatar-size="45" style="margin-top:10px;"></ul>
             </section>
+            <div id="comments">
+                <div class="ds-thread" {% if page.id %}data-thread-key="{{ page.id }}"{% endif %}  data-title="{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}"></div>
+            </div>
             </div>
           </div>
           <div class="pagination">
