@@ -59,7 +59,7 @@ categories:
 
 其内容就一个shell命令，将2地linux服务器的构建文件夹同步（两个linux服务器需要建立ssh信任，不然需要录入账号密码）。
 
-```shell
+```sh
 rsync -az --delete -progress -e ssh $buildDir $user@$remoteServer:$buildDir
 ```
 
