@@ -63,7 +63,7 @@ categories:
 rsync -az --delete -progress -e ssh $buildDir $user@$remoteServer:$buildDir
 ```
 
-rsync命令用于linux间同步，我们使用-az老保持所有文件的属性也进行同步，--delete删除B服务器上存在而A服务器上不存在的文件。
+rsync命令用于linux间同步，我们使用-az来保持所有文件的属性也进行同步，--delete删除B服务器上存在而A服务器上不存在的文件。
 
 除了第一次同步需要较多时间外，往后每次同步都只会更新修改的文件，只需要很少的时间。
 
