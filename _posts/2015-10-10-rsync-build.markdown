@@ -54,7 +54,7 @@ categories:
 使用Jenkins作为CI工具，A、B两市分别一台linux服务器，源码服务器依然在B市。
 
 
-## 执行流程
+### 执行流程
 在B的Jenkins上增加一个rsync任务，其流程位于各模块聚合后，产品打包前。
 
 其内容就一个shell命令，将2地linux服务器的构建文件夹同步（两个linux服务器需要建立ssh信任，不然需要录入账号密码）。
