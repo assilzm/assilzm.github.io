@@ -139,11 +139,12 @@ WebElement getCell(String headText,String cellText){
 List<String> getHeadTextList(){
     return getTexts("$containerSelector/$TABLE_TAGNAME/$TABLE_HEAD_TAGNAME/$TR_TAGNAME/$TD_TAGNAME")
 }
-        ```
+```
 
 **特殊的情况**
 
 当然，实际情况中可能遇到这样的问题，在有的页面中控件在一个frame当中，这种时候我们可以使用getter方法来初始化控件，如：
+
 ```java
 final static String FRAME="frame"
 
