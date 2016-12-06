@@ -200,7 +200,8 @@ def render(no_follow = false, encoding = nil, include_levels = 10)
   end
 
   process_chain data, filter_chain
-end```
+end
+```
 
 ###5、修改_**$gems/gollum-lib-4.0.X/lib/gollum-lib/**_下的_**wiki.rb**_，在**_initialize_**方法中增加一个对象**_@dot_**：
 
