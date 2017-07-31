@@ -11,7 +11,9 @@ categories:
 - Selenium WebDriver
 ---
 上一章中，我们有简单的介绍下一个列表组件该怎么设计，给出了我简单的设计思路。
+
 本来这一章准备写点复杂的页面设计的，但是看平时很多人对树结构很头疼，因此在本章中，我以一个比较完整的树结构的设计设计对上一章进行一点补充。
+
 本次我们要设计一个简单的树，随便找了个例子：[http://www.treejs.cn/v3/demo.php#_101](http://www.treejs.cn/v3/demo.php#_101)如图：
 
 [![tree](http://assilzm.github.io/images/2014/05/tree.jpg)](http://assilzm.github.io/images/2014/05/tree.jpg)
@@ -24,6 +26,7 @@ categories:
   4. 子节点在父节点的子元素中
 
 树可能会有很多的变种，这里我们仅以符合上面特征的树作为例子，有其他特殊需求的同学请自行扩展。
+
 观察这个树结构，我们发现我们可能需要用到的一些属性，以方便以后如果要支持其他树结构可以进行简单的修改支持，这里我们仅以例子中的结构为例，把这些特征设计为属性，它们如下：
 
   1. 树的特征，或者说是树所在页面中的容器选择器特征
@@ -31,6 +34,7 @@ categories:
   3. 父节点展开后子节点所在的容器
   4. 节点在树结构中的元素（如该例子中是一个li下的a元素，只有该元素接受点击事件）
   5. 开关的选择器特征，以及打开、关闭状态的选择器特征
+
 
 好了，特征大概就是这些，我们根据这些特征，先设计好树控件的属性：
 
@@ -40,7 +44,7 @@ private final static Logger logger = LogUtils.getLogger(Tree)
 /**
  * tree container tag name
  */
-final static String CONTAINERTAGNAME = 'div'
+final static String CONTAINERTAGNAME = "div"
 
 /**
  * tree container attribute name
@@ -119,8 +123,10 @@ Tree(String selector) {
 
     直到节点序列最后一个元素找到，返回该节点的选择器
 
-我们设计一个getNodeSelector方法，传入一个为List<String>的节点路径参树，生成选择器。这个方法可能用到其他两个方法:根据提供的显示文本返回某个子节点选择器的方法getSubNodeSelector、展开某个节点的方法unfoldNode
-getNodeSelector：
+
+我们设计一个**getNodeSelector**方法，传入一个为List<String>的节点路径参树，生成选择器。这个方法可能用到其他两个方法:根据提供的显示文本返回某个子节点选择器的方法**getSubNodeSelector**、展开某个节点的方法**unfoldNode**
+
+**getNodeSelector**：
 
 ```java
 /**
@@ -142,7 +148,7 @@ String getNodeSelector(List<String> pathList) {
 }
 ```
 
-getSubNodeSelector：
+**getSubNodeSelector**：
 
 ```java
 /**
@@ -161,7 +167,7 @@ private String getSubNodeSelector(String nodeSelector, String subNodeText) {
 }
 ```
 
-unfoldNode：
+**unfoldNode**：
 
 ```java
 /**
@@ -196,7 +202,9 @@ void clickNode(List<String> pathList){
 ```
 
 接下来只要扩展方法，完全可以实现所有的其他操作。大家自行扩展即可，该代码也可以在示例工程中找到。
+
 PS:细心的同学可以可以发现，我们定义的根节点根本没有用上。其实如果该页面中只有一棵树，我们完全可以不管树所在的容器，直接使用根节点的ztree这个class来完成定位，至于怎么修改一下该控件结构来达到这个目的.同样，有的地方对于异常数据的验证也不完整，就交给大家自己解决啦~
+
 配合上前面几张所讲的页面控件的调用方法，我们要点击"叶子节点122",就可以如下操作啦：
 
 ```java
