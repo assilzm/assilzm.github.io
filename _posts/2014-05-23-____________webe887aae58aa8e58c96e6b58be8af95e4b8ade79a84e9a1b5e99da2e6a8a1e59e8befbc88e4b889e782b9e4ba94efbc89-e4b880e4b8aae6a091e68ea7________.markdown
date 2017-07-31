@@ -124,7 +124,8 @@ Tree(String selector) {
     直到节点序列最后一个元素找到，返回该节点的选择器
 
 
-我们设计一个**getNodeSelector**方法，传入一个为List<String>的节点路径参树，生成选择器。这个方法可能用到其他两个方法:根据提供的显示文本返回某个子节点选择器的方法**getSubNodeSelector**、展开某个节点的方法**unfoldNode**
+我们设计一个**getNodeSelector**方法，传入一个为List<String>的节点路径参树，生成选择器。这个方法可能用到其他两个方法:根据提供的显示文本返回某个子节点选择器的方法 **getSubNodeSelector** 、展开某个节点的方法 **unfoldNode**
+
 
 **getNodeSelector**：
 
