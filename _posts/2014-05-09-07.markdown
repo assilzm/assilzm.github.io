@@ -281,5 +281,5 @@ LoginPage loginPage=new LoginPage()
 HomePage homePage=loginPage.loginSuccess(userName,password)
 ```
 
- 下一章：《[WEB自动化测试中的页面模型（二）-邮件页面结构分析](http://www.assilzm.com/?p=113)》
+ 下一章：《[WEB自动化测试中的页面模型（二）-邮件页面结构分析](http://www.assilzm.com/2014/05/09)》
  组件设计方到后面去写。

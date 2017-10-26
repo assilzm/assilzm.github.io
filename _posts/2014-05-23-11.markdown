@@ -205,3 +205,5 @@ tree.clickNode(nodeList)
 ```
 
 补充就到这里，复杂页面的设计我有空了会更新。
+
+下一章:[Web自动化测试中的页面模型（四）-页面模型管理](http://www.assilzm.com/2014/12/12)
