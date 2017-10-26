@@ -97,6 +97,9 @@ class GroupAdminPage extends AbstractPage{
 
 现在我们的所有页面都有了自己对应的页面名称，现在我们修改下简单页面工厂，来自动获取指定包下所有带Page注解的类生产对应关系
 
+**这里面为了方便用了Reflections，这个包可以很容易在maven库里找到。**
+
+
 ```java
 class PageFactory {
 
@@ -161,12 +164,11 @@ class PageFactory {
 }
 ```
 
-这里面为了方便用了Reflections，这个包可以很容易在maven库里找到。
 
 现在我们可以简单的使用
 
 ```java
-    PageFactory.createPage(pageName)
+  def page = PageFactory.createPage(pageName)
 ```
 
 来获得一个页面的实例了。
