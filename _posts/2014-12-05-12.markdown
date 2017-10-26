@@ -168,7 +168,7 @@ class PageFactory {
 现在我们可以简单的使用
 
 ```java
-  def page = PageFactory.createPage(pageName)
+  AbstractPage page = PageFactory.createPage(pageName)
 ```
 
 来获得一个页面的实例了。
