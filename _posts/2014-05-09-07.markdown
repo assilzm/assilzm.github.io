@@ -3,7 +3,7 @@ author: admin
 comments: true
 date: 2014-05-09 15:26:23+00:00
 layout: post
-<!-- title: WEB自动化测试中的页面模型（一）--工程结构及登陆页面 -->
+title: WEB自动化测试中的页面模型（一）--工程结构及登陆页面
 wordpress_id: 78
 categories:
 - Selenium WebDriver
