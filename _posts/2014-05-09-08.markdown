@@ -11,7 +11,7 @@ categories:
 - Selenium WebDriver
 ---
 
-以下是废话，不想看的直接进入正题：《[WEB自动化测试中的页面模型（一） 工程结构及登陆页面](http://www.assilzm.com/?p=78)》
+以下是废话，不想看的直接进入正题：《[WEB自动化测试中的页面模型（一） 工程结构及登陆页面](http://www.assilzm.com/2014/05/web-e8-87-aa-e5-8a-a8-e5-8c-96-e4-b8-ad-e6-b5-8b-e8-af-95-e7-9a-84-e9-a1-b5-e9-9d-a2-e6-a8-a1-e5-9e-8b-ef-bc-88-e4-b8-80-ef-bc-89-e5-b7-a5-e7-a8-8b-e7-bb-93-e6-9e-84-e5-8f-8a-e7-99-bb-e9-99-86)》
 
 示例工程地址：[https://github.com/assilzm/PageObjectExample](https://github.com/assilzm/PageObjectExample)
 
